@@ -50,6 +50,7 @@ func initMap() {
 }
 
 var argInput = flag.String("i", "", "A string of text to rotate.")
+var flipIt = flag.Bool("f", false, "Rage flip it.")
 
 func main() {
 	flag.Parse()
@@ -59,6 +60,9 @@ func main() {
 	}
 	initMap()
 	rotated := strings.Map(rotateRune, reverseText(input))
+	if *flipIt {
+		rotated = "(╯°□°)╯︵" + rotated
+	}
 	fmt.Printf("%s\n", rotated)
 }
 
