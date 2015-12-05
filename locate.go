@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
+	"sync"
 )
 
 var usage string = `
@@ -13,7 +16,7 @@ Example: %s 'example.*.txt'
 `
 
 var filenameRegexp *regexp.Regexp
-var locatedPath string
+var paths chan string
 
 func main() {
 	if len(os.Args) != 2 {
@@ -27,27 +30,61 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	err = filepath.Walk(wd, Mark)
+	errors := make(chan error)
+	paths = make(chan string)
+	dirs, err := ioutil.ReadDir(wd)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
 	}
-	switch locatedPath {
-	case "":
-		fmt.Fprintf(os.Stderr, "File not found with name matching '%s'\n", os.Args[1])
-	default:
-		fmt.Println(filepath.Dir(locatedPath))
+	var wg sync.WaitGroup
+	for _, info := range dirs {
+		switch {
+		case info.IsDir():
+			wg.Add(1)
+			go func() {
+				if err := filepath.Walk(wd, Mark); err != nil {
+					errors <- err
+				}
+				wg.Done()
+			}()
+		case filenameRegexp.Match([]byte(info.Name())):
+			paths <- fmt.Sprintf("%v/%v", wd, info.Name())
+		}
+	}
+	go func() {
+		wg.Wait()
+		errors <- errNotFound
+	}()
+	select {
+	case path := <-paths:
+		fmt.Println(filepath.Dir(path))
+		os.Exit(0)
+	case err := <-errors:
+		switch err {
+		case errNotFound:
+			fmt.Fprintf(os.Stderr, err.Error(), os.Args[1])
+			os.Exit(0)
+		default:
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		case nil:
+		}
+
 	}
 }
 
+var (
+	errNotFound = errors.New("File not found with name matching '%s'\n")
+)
+
 func Mark(path string, info os.FileInfo, err error) error {
 	switch {
-	case locatedPath != "" || info.IsDir():
+	case info.IsDir():
 		return nil
 	case err != nil && err != os.ErrPermission:
 		return err
 	case filenameRegexp.Match([]byte(info.Name())):
-		locatedPath = path
+		paths <- path
 	}
 	return nil
 }
