@@ -20,7 +20,7 @@ func main() {
 	case f.usage:
 		flag.Usage()
 		os.Exit(0)
-	case f.all:
+	case !f.any:
 		if len(args.nonExistent) > 0 {
 			fmt.Fprintf(os.Stderr, "Invalid paths: %v\n", args.nonExistent)
 			os.Exit(1)
@@ -38,7 +38,7 @@ func main() {
 			}
 		}
 	}
-	if f.files || f.dirs || f.empty {
+	if !f.any && (f.files || f.dirs || f.empty) {
 		files, dirs := args.pathsByType()
 		switch {
 		case f.empty && len(args.nonEmpty) > 0:
@@ -63,13 +63,13 @@ func (a *arguments) parse() error {
 	if flag.Parsed() {
 		return nil
 	}
-	flag.BoolVar(&a.all, "all", false, "Trash all arguments, or none if any argument is invalid")
-	flag.BoolVar(&a.empty, "empty", false, "Use the arguments that are empty files or directories")
-	flag.BoolVar(&a.dirs, "dirs", false, "")
-	flag.BoolVar(&a.flags.files, "files", false, "")
-	flag.BoolVar(&a.usage, "usage", false, "")
+	flag.BoolVar(&a.any, "any", false, "Trash any possible arguments, ignoring any invalid arguments")
+	flag.BoolVar(&a.empty, "empty", false, "Use the arguments that are empty files or empty directories")
+	flag.BoolVar(&a.dirs, "dirs", false, "Trash all valid directories supplied as arguments (or none if any arguments are invalid).")
+	flag.BoolVar(&a.flags.files, "files", false, "Trash ")
+	flag.BoolVar(&a.usage, "usage", false, "Trash all valid files supplied as arguments (or none if any arguments are invalid).")
 	trashBin := fmt.Sprintf("%v/%v", os.Getenv("HOME"), "trash")
-	flag.StringVar(&a.into, "into", trashBin, "")
+	flag.StringVar(&a.into, "into", trashBin, "Put all trash into a specific directory.")
 	flag.Parse()
 	return a.parsePaths(flag.Args())
 }
@@ -122,7 +122,7 @@ type arguments struct {
 }
 
 type flags struct {
-	all   bool // TODO(aoeu): all should become "any" and be false by default.
+	any   bool
 	empty bool
 	dirs  bool
 	files bool
