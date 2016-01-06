@@ -30,7 +30,6 @@ func main() {
 		filepaths := args.files
 		args.files = make([]file, 0)
 		for _, f := range filepaths {
-			// TODO(aoeu): Why does args.flags.files get merged with args.files?
 			if f.isEmpty {
 				args.files = append(args.files, f)
 			} else {
