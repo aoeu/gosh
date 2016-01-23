@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -11,12 +12,29 @@ import (
 	"github.com/jaytaylor/html2text"
 )
 
-func usage() string {
-	return fmt.Sprintf("Usage: %v http://example.com", os.Args[0])
+var usageMessage = `usage: %v http://example.com/index.html
+
+%v downloads the file at the specified web URL and converts any HTML to plain text.
+
+example: leamos https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+
+`
+
+func usage() {
+	p := os.Args[0]
+	fmt.Fprintf(os.Stderr, usageMessage, p, p)
+	flag.PrintDefaults()
+	os.Exit(2)
 }
 
 func download(u url.URL) ([]byte, error) {
-	resp, err := http.Get(u.String())
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		return make([]byte, 0, 0), err
+	}
+	req.Header.Set("User-Agent", "Lynx/2.8.8dev.3 libwww-FM/2.14 SSL-MM/1.4.1")
+	resp, err := client.Do(req)
 	if err != nil {
 		return make([]byte, 0, 0), err
 	}
@@ -25,9 +43,10 @@ func download(u url.URL) ([]byte, error) {
 }
 
 func main() {
+	flag.Usage = usage
+	flag.Parse()
 	if len(os.Args) != 2 {
-		fmt.Fprintln(os.Stderr, usage())
-		os.Exit(1)
+		usage()
 	}
 	u := os.Args[1]
 	URL, err := url.Parse(u)
