@@ -1,5 +1,7 @@
 package main
 
+// go get github.com/aoeu/gosh/cmd/path && echo "function goto { cd $(path $*); }" >> ~/.profile && source ~/.profile
+
 import (
 	"fmt"
 	"os"
