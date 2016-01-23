@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"image"
 	"image/gif"
@@ -11,7 +12,24 @@ import (
 	"strings"
 )
 
+var usageMessage = `
+usage: %v [image.png image.gif imagejpg ...]
+
+%v takes a list of PNG, GIF, and JPG files and prints their pixel boundary dimenions.
+
+`
+
+func usage() {
+	p := os.Args[0]
+	fmt.Fprintf(os.Stderr, usageMessage, p, p)
+	flag.PrintDefaults()
+	os.Exit(2)
+}
+
 func main() {
+	flag.Usage = usage
+	flag.Parse()
+
 	for _, name := range os.Args[1:] {
 		f, err := os.Open(name)
 		if err != nil {
