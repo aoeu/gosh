@@ -2,15 +2,18 @@ package main
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
 )
 
-var usage string = `
-Usage: '%s regexp', where "regexp" is a regular expression to match a file name.
-Example: %s 'example.*.txt'
+var usageMessage string = `usage: '%s regexp'
+
+%s uses a regular expression to locate files with a matching name under the current working directory.
+
+example: %s 'example.*.txt'
 `
 
 var (
@@ -21,11 +24,19 @@ var (
 	done           bool
 )
 
+func usage() {
+	s := os.Args[0]
+	fmt.Fprintf(os.Stderr, usageMessage, s, s, s)
+	os.Exit(2)
+}
+
+// TODO(aoeu): Fix a bug that causes a deadlock when the file name is not found.
+
 func main() {
+	flag.Usage = usage
+	flag.Parse()
 	if len(os.Args) != 2 {
-		s := os.Args[0]
-		fmt.Fprintf(os.Stderr, usage, s, s)
-		os.Exit(1)
+		usage()
 	}
 	filenameRegexp = regexp.MustCompile(os.Args[1])
 	wd, err := os.Getwd()
