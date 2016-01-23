@@ -54,12 +54,13 @@ func (f fileSizes) Less(i, j int) bool { return f[i].byteSize > f[j].byteSize }
 var allFileSizes fileSizes
 var tabw *tabwriter.Writer
 
-var usageMessage = `usage: %v [-top 20] [-under /path/to/a/directory] 
+var usageMessage = `usage: %v [-top 20] [-under /path/to/a/directory] [-in /path/to/a/directory]
 
 %v walks the current or provided directory, and prints out the top N 
 files by largest size, in descending order.
 
 `
+
 func usage() {
 	f := os.Args[0]
 	fmt.Fprintf(os.Stderr, usageMessage, f, f)
@@ -69,24 +70,29 @@ func usage() {
 
 func main() {
 	args := struct {
-		root         string
+		under        string
+		within       string
 		num          int
 		rightjustify bool
 	}{}
-	flag.StringVar(&args.root, "under", "", "The root directory to run from.")
+	flag.StringVar(&args.under, "under", "", "The directory under which to size and rank all files.")
+	flag.StringVar(&args.within, "within", "", "The directory within to size and rank all files.")
+	//TODO(aoeu):
+	// flag.StringVar(&args.within, "within", "", "The directory within to size and rank all files.")
 	flag.IntVar(&args.num, "top", 10, "The top number of files to output.")
 	flag.BoolVar(&args.rightjustify, "rightjustify", false, "Align file paths to the right in output")
 	flag.Usage = usage
 	flag.Parse()
-	if wd, err := os.Getwd(); args.root == "" && err == nil {
-		args.root = wd
+	if wd, err := os.Getwd(); args.under == "" && err == nil {
+		args.under = wd
 	}
 
 	tabw = new(tabwriter.Writer)
 	tabw.Init(os.Stdout, 8, 0, 1, ' ', tabwriter.AlignRight)
 	allFileSizes = make(fileSizes, 0)
 
-	err := filepath.Walk(args.root, mark)
+	err := filepath.Walk(args.under, mark)
+
 	if err != nil {
 		log.Fatal(err)
 	}
