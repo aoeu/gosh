@@ -54,15 +54,29 @@ func (f fileSizes) Less(i, j int) bool { return f[i].byteSize > f[j].byteSize }
 var allFileSizes fileSizes
 var tabw *tabwriter.Writer
 
+var usageMessage = `usage: %v [-top 20] [-under /path/to/a/directory] 
+
+%v walks the current or provided directory, and prints out the top N 
+files by largest size, in descending order.
+
+`
+func usage() {
+	f := os.Args[0]
+	fmt.Fprintf(os.Stderr, usageMessage, f, f)
+	flag.PrintDefaults()
+	os.Exit(2)
+}
+
 func main() {
 	args := struct {
 		root         string
 		num          int
 		rightjustify bool
 	}{}
-	flag.StringVar(&args.root, "root", "", "The root directory to run from.")
+	flag.StringVar(&args.root, "under", "", "The root directory to run from.")
 	flag.IntVar(&args.num, "top", 10, "The top number of files to output.")
 	flag.BoolVar(&args.rightjustify, "rightjustify", false, "Align file paths to the right in output")
+	flag.Usage = usage
 	flag.Parse()
 	if wd, err := os.Getwd(); args.root == "" && err == nil {
 		args.root = wd
@@ -77,7 +91,7 @@ func main() {
 		log.Fatal(err)
 	}
 	sort.Sort(allFileSizes)
-	for i := 0; i < args.num; i++ {
+	for i := 0; i < len(allFileSizes) && i < args.num; i++ {
 		fmt.Fprintln(tabw, allFileSizes[i])
 		if !args.rightjustify {
 			tabw.Flush()
