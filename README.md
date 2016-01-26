@@ -46,9 +46,8 @@ usage: leamos http://example.com/index.html
 leamos downloads the file at the specified web URL and converts any HTML to
 plain text.
 
-example: leamos
-https://www.reddit.com/r/NoStupidQuestions/comments/1t4niz/why_are_so_many_tumblr_blogs_so_unreadable/
-| fmt | less
+example: leamos https://en.wikipedia.org/wiki/Readability | fmt --split-only
+--goal 50 | less
 
 ```
 ### locate
