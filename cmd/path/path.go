@@ -17,11 +17,18 @@ If the directory names do not create a complete path, a path under the user's ho
 
 example: path go src encoding json 
 
+In a Bourne-compatible shell:
 go get github.com/aoeu/gosh/cmd/path 
-echo "function goto { cd $(path $*); }" >> ~/.profile 
-source ~/.profile
+echo 'function goto { cd $(path $*); }' >> ~/.profile  && source ~/.profile
 goto go src net
 
+In fish:
+go get github.com/aoeu/gosh/cmd/path
+function goto
+	cd (path $argv)
+end
+funcsave goto
+goto go src net
 `
 
 func usage() {
