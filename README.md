@@ -90,17 +90,15 @@ goto go src net
 ```
 Usage of trash:
   -any
-	Trash any possible arguments, ignoring any invalid arguments
+	Trash any possible arguments, ignoring any invalid arguments.
   -dirs
 	Trash all valid directories supplied as arguments (or none if any
 	arguments are invalid).
   -empty
-	Use the arguments that are empty files or empty directories
+	Use the arguments that are empty files or empty directories.
   -files
-	Trash
-  -into string
-	Put all trash into a specific directory. (default "/home/tasm/trash")
-  -usage
 	Trash all valid files supplied as arguments (or none if any arguments
 	are invalid).
+  -into string
+	Put all trash into a specific directory. (default "/home/tasm/trash")
 ```
