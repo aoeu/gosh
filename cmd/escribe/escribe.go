@@ -16,7 +16,9 @@ var usageMessage = `usage: %v http://example.com/index.html
 
 %v downloads the file at the specified web URL and converts any HTML to plain text.
 
-example: leamos https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+
+echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
 
 `
 
@@ -53,6 +55,9 @@ func main() {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Invalid URL %v : %v\n", u, err)
 		os.Exit(1)
+	}
+	if URL.Host == "www.nytimes.com" {
+		URL.RawQuery += "&pagewanted=print"
 	}
 	b, err := download(*URL)
 	if err != nil {
