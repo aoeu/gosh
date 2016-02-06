@@ -62,11 +62,10 @@ func (a *arguments) parse() error {
 	if flag.Parsed() {
 		return nil
 	}
-	flag.BoolVar(&a.any, "any", false, "Trash any possible arguments, ignoring any invalid arguments")
-	flag.BoolVar(&a.empty, "empty", false, "Use the arguments that are empty files or empty directories")
+	flag.BoolVar(&a.any, "any", false, "Trash any possible arguments, ignoring any invalid arguments.")
+	flag.BoolVar(&a.empty, "empty", false, "Trash only the arguments that are empty files or empty directories.")
 	flag.BoolVar(&a.dirs, "dirs", false, "Trash all valid directories supplied as arguments (or none if any arguments are invalid).")
-	flag.BoolVar(&a.flags.files, "files", false, "Trash ")
-	flag.BoolVar(&a.usage, "usage", false, "Trash all valid files supplied as arguments (or none if any arguments are invalid).")
+	flag.BoolVar(&a.flags.files, "files", false, "Trash all valid files supplied as arguments (or none if any arguments are invalid).")
 	trashBin := fmt.Sprintf("%v/%v", os.Getenv("HOME"), "trash")
 	flag.StringVar(&a.into, "into", trashBin, "Put all trash into a specific directory.")
 	flag.Parse()
