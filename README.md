@@ -16,19 +16,20 @@ Alternatively, install all the programs:
 
 ## Program Descriptions
 
-### bigbig
+### escribe
 ```
-usage: bigbig [-top 20] [-under /path/to/a/directory]
+usage: escribe http://example.com/index.html
 
-bigbig walks the current or provided directory, and prints out the top N
-files by largest size, in descending order.
+escribe downloads the file at the specified web URL and converts any HTML
+to plain text.
 
-  -rightjustify
-	Align file paths to the right in output
-  -top int
-	The top number of files to output. (default 10)
-  -under string
-	The root directory to run from.
+example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
+--goal 50 | less
+
+pr 'function leamos { escribe $1 | fmt --split-only --goal 50 | pr -w 200 -4 |
+less } >> ~/.profile'
+
+
 ```
 ### imagebounds
 ```
@@ -39,16 +40,22 @@ imagebounds takes a list of PNG, GIF, and JPG files and prints their pixel
 boundary dimenions.
 
 ```
-### leamos
+### largest
 ```
-usage: leamos http://example.com/index.html
+usage: largest [-top 20] [-under /path/to/a/directory] [-in
+/path/to/a/directory]
 
-leamos downloads the file at the specified web URL and converts any HTML to
-plain text.
+largest walks the current or provided directory, and prints out the top N
+files by largest size, in descending order.
 
-example: leamos https://en.wikipedia.org/wiki/Readability | fmt --split-only
---goal 50 | less
-
+  -rightjustify
+	Align file paths to the right in output
+  -top int
+	The top number of files to output. (default 10)
+  -under string
+	The directory under which to size and rank all files.
+  -within string
+	The directory within to size and rank all files.
 ```
 ### locate
 ```

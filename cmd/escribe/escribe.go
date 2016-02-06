@@ -16,7 +16,7 @@ var usageMessage = `usage: %v http://example.com/index.html
 
 %v downloads the file at the specified web URL and converts any HTML to plain text.
 
-example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+example: %v https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
 
 echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
 
@@ -24,7 +24,7 @@ echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.p
 
 func usage() {
 	p := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, p, p)
+	fmt.Fprintf(os.Stderr, usageMessage, p, p, p) // TODO(aoeu): Use a template.
 	flag.PrintDefaults()
 	os.Exit(2)
 }
