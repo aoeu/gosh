@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"sort"
 	"text/tabwriter"
+	"text/template"
 )
 
 type byteSize int64
@@ -54,16 +55,23 @@ func (f fileSizes) Less(i, j int) bool { return f[i].byteSize > f[j].byteSize }
 var allFileSizes fileSizes
 var tabw *tabwriter.Writer
 
-var usageMessage = `usage: %v [-top 20] [-under /path/to/a/directory] [-in /path/to/a/directory]
+var usageTemplate = `usage: {{.}} [-top 20] [-under /path/to/a/directory] [-in /path/to/a/directory]
 
-%v walks the current or provided directory, and prints out the top N 
+{{.}} walks the current or provided directory, and prints out the top N 
 files by largest size, in descending order.
 
 `
 
 func usage() {
-	f := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, f, f)
+	var t template.Template
+	if t, err := template.New("usage").Parse(usageTemplate); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	flag.PrintDefaults()
 	os.Exit(2)
 }

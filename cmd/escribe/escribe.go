@@ -8,23 +8,32 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"text/template"
 
 	"github.com/jaytaylor/html2text"
 )
 
-var usageMessage = `usage: %v http://example.com/index.html
+var usageTemplate = `usage: {{.}} http://example.com/index.html
 
-%v downloads the file at the specified web URL and converts any HTML to plain text.
+{{.}} downloads the file at the specified web URL and converts any HTML to plain text.
 
-example: %v https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+example: {{.}} https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
 
-echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
+echo 'function leamos() { {{.}} $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
 
 `
 
 func usage() {
-	p := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, p, p, p) // TODO(aoeu): Use a template.
+	var t *template.Template
+	var err error
+	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	flag.PrintDefaults()
 	os.Exit(2)
 }

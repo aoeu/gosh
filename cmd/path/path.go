@@ -7,36 +7,45 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"text/template"
 )
 
-var usageMessage = `usage: %v path to some dir
+var usageTemplate = `usage: {{.}} relative path to a directory
 
-%v takes a space separated list of directory names of a valid directory tree and navigates and prints the full path with separators specific to the host Operating System.
+{{.}} takes a space separated list of directory names of a valid directory tree and prints the full path with separators specific to the host Operating System.
 
 If the directory names do not create a complete path, a path under the user's home directory is attempted, then a path derived from the root directory, and finally an error is printed if none are found to be valid paths.
 
-example: path go src encoding json 
+example: {{.}} go src encoding json 
 
 In a Bourne-compatible shell:
-go get github.com/aoeu/gosh/cmd/path 
-echo 'function goto { cd $(path $*); }' >> ~/.profile  && source ~/.profile
+go get github.com/aoeu/gosh/cmd/{{.}}
+echo 'function goto { cd $({{.}} $*); }' >> ~/.profile  && source ~/.profile
 goto go src net
 
 In fish:
-go get github.com/aoeu/gosh/cmd/path
+go get github.com/aoeu/gosh/cmd/{{.}}
 function goto
-	cd (path $argv)
+	cd ({{.}} $argv)
 end
 funcsave goto
 goto go src net
 `
 
 func usage() {
-	s := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, s, s)
+	var t *template.Template
+	var err error
+	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	flag.PrintDefaults()
 	os.Exit(2)
 }
-
 func exists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
 		return false
