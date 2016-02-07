@@ -17,9 +17,6 @@ func main() {
 	args.parse()
 	f := args.flags
 	switch {
-	case f.usage:
-		flag.Usage()
-		os.Exit(0)
 	case !f.any:
 		if len(args.nonExistent) > 0 {
 			fmt.Fprintf(os.Stderr, "Invalid paths: %v\n", args.nonExistent)
@@ -125,7 +122,6 @@ type flags struct {
 	dirs  bool
 	files bool
 	into  string
-	usage bool
 }
 
 type file struct {
