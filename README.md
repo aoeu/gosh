@@ -26,9 +26,8 @@ to plain text.
 example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
 --goal 50 | less
 
-pr 'function leamos { escribe $1 | fmt --split-only --goal 50 | pr -w 200 -4 |
-less } >> ~/.profile'
-
+echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }'
+>> ~/.profile
 
 ```
 ### imagebounds
@@ -68,11 +67,10 @@ example: locate 'example.*.txt'
 ```
 ### path
 ```
-usage: path path to some dir
+usage: path relative path to a directory
 
-path takes a space separated list of directory names of a valid directory
-tree and navigates and prints the full path with separators specific to the
-host Operating System.
+path takes a space separated list of directory names of a valid directory tree
+and prints the full path with separators specific to the host Operating System.
 
 If the directory names do not create a complete path, a path under the user's
 home directory is attempted, then a path derived from the root directory,
@@ -80,11 +78,18 @@ and finally an error is printed if none are found to be valid paths.
 
 example: path go src encoding json
 
+In a Bourne-compatible shell:
 go get github.com/aoeu/gosh/cmd/path
-echo "function goto { cd $(path $*); }" >> ~/.profile
-source ~/.profile
+echo 'function goto { cd $(path $*); }' >> ~/.profile  && source ~/.profile
 goto go src net
 
+In fish:
+go get github.com/aoeu/gosh/cmd/path
+function goto
+	cd (path $argv)
+end
+funcsave goto
+goto go src net
 ```
 ### trash
 ```
@@ -95,7 +100,7 @@ Usage of trash:
 	Trash all valid directories supplied as arguments (or none if any
 	arguments are invalid).
   -empty
-	Use the arguments that are empty files or empty directories.
+	Trash only the arguments that are empty files or empty directories.
   -files
 	Trash all valid files supplied as arguments (or none if any arguments
 	are invalid).
