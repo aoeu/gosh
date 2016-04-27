@@ -21,5 +21,7 @@ Alternatively, install all the programs:
 ## Program Descriptions
 
 EOF
-for f in `lc cmd/`; do echo "### $f  " && echo "\`\`\`" && $f -help 2>&1 || echo "\`\`\`" ; done | fmt -s -w 80 >> $out
-
+pushd .
+cd cmd
+for f in `list *`; do echo "### $f  " && echo "\`\`\`" && $GOBIN/$f -help 2>&1 || echo "\`\`\`" ; done | fmt -s -w 80 >> ../$out
+popd
