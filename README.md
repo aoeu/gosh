@@ -50,7 +50,21 @@ prints their pixel boundary dimenions.
 ```
 ### largest
 ```
-./makereadme.sh: line 26: /home/aoeu/ir/bin/largest: No such file or directory
+usage: /home/aoeu/ir/bin/largest [-top 20] [-under /path/to/a/directory]
+[-in /path/to/a/directory]
+
+/home/aoeu/ir/bin/largest walks the current or provided directory, and prints
+out the top N
+files by largest size, in descending order.
+
+  -rightjustify
+	Align file paths to the right in output
+  -top int
+	The top number of files to output. (default 10)
+  -under string
+	The directory under which to size and rank all files.
+  -within string
+	The directory within to size and rank all files.
 ```
 ### list
 ```
@@ -97,11 +111,6 @@ function goto
 end
 funcsave goto
 goto go src net
-```
-### README.md
-```
-./makereadme.sh: line 26: /home/aoeu/ir/bin/README.md: No such file or
-directory
 ```
 ### trash
 ```

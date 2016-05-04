@@ -63,8 +63,9 @@ files by largest size, in descending order.
 `
 
 func usage() {
-	var t template.Template
-	if t, err := template.New("usage").Parse(usageTemplate); err != nil {
+	var t *template.Template
+	var err error
+	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
