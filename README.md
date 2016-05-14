@@ -18,43 +18,42 @@ Alternatively, install all the programs:
 
 ### busca
 ```
-usage: '/home/aoeu/ir/bin/busca regexp'
+usage: 'busca regexp'
 
-/home/aoeu/ir/bin/busca uses a regular expression to locate files with a
-matching name under the current working directory.
+busca uses a regular expression to locate files with a matching name under
+the current working directory.
 
-example: /home/aoeu/ir/bin/busca 'example.*.txt'
+example: busca 'example.*.txt'
 ```
 ### escribe
 ```
-usage: /home/aoeu/ir/bin/escribe http://example.com/index.html
+usage: escribe http://example.com/index.html
 
-/home/aoeu/ir/bin/escribe downloads the file at the specified web URL and
-converts any HTML to plain text.
+escribe downloads the file at the specified web URL and converts any HTML
+to plain text.
 
-example: /home/aoeu/ir/bin/escribe https://en.wikipedia.org/wiki/Readability |
-fmt --split-only --goal 50 | less
+example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
+--goal 50 | less
 
-echo 'function leamos() { /home/aoeu/ir/bin/escribe $1 | fmt -40 | pr -w
-200 -5 | less; }' >> ~/.profile
+echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }'
+>> ~/.profile
 
 ```
 ### imagebounds
 ```
 
-usage: /home/aoeu/ir/bin/imagebounds [image.png image.gif imagejpg ...]
+usage: imagebounds [image.png image.gif imagejpg ...]
 
-/home/aoeu/ir/bin/imagebounds takes a list of PNG, GIF, and JPG files and
-prints their pixel boundary dimenions.
+imagebounds takes a list of PNG, GIF, and JPG files and prints their pixel
+boundary dimenions.
 
 ```
 ### largest
 ```
-usage: /home/aoeu/ir/bin/largest [-top 20] [-under /path/to/a/directory]
-[-in /path/to/a/directory]
+usage: largest [-top 20] [-under /path/to/a/directory] [-in
+/path/to/a/directory]
 
-/home/aoeu/ir/bin/largest walks the current or provided directory, and prints
-out the top N
+largest walks the current or provided directory, and prints out the top N
 files by largest size, in descending order.
 
   -rightjustify
@@ -68,53 +67,51 @@ files by largest size, in descending order.
 ```
 ### list
 ```
-usage: /home/aoeu/ir/bin/list [ files ]
+usage: list [ files ]
 
-'/home/aoeu/ir/bin/list' lists the files in the current directory in an
-alphabetical list,
-similar to 'ls' of the Plan9 operating system or the 'ls -1' command in
-Unix-like systems.
+'list' lists the files in the current directory in an actual list,
+instead of columns, which is dissimilar from the 'ls' command in
+Unix-like systems, but is similar to 'ls' of the Plan9
+operating system (or the 'ls -1' command in Unix-like systems).
 
 A glob expression or arbirtary list of files may be provided as arguments.
 
 examples:
-	/home/aoeu/ir/bin/list
-	/home/aoeu/ir/bin/list a*
-	/home/aoeu/ir/bin/list *.txt
-	/home/aoeu/ir/bin/list foo.bar *.fiz qux.baz *.buz
+	list
+	list a*
+	list *.txt
+	list foo.bar *.fiz qux.baz *.buz
 
 ```
 ### path
 ```
-usage: /home/aoeu/ir/bin/path relative path to a directory
+usage: path relative path to a directory
 
-/home/aoeu/ir/bin/path takes a space separated list of directory names of
-a valid directory tree and prints the full path with separators specific to
-the host Operating System.
+path takes a space separated list of directory names of a valid directory tree
+and prints the full path with separators specific to the host Operating System.
 
 If the directory names do not create a complete path, a path under the user's
 home directory is attempted, then a path derived from the root directory,
 and finally an error is printed if none are found to be valid paths.
 
-example: /home/aoeu/ir/bin/path go src encoding json
+example: path go src encoding json
 
 In a Bourne-compatible shell:
-go get github.com/aoeu/gosh/cmd//home/aoeu/ir/bin/path
-echo 'function goto { cd $(/home/aoeu/ir/bin/path $*); }' >> ~/.profile  &&
-source ~/.profile
+go get github.com/aoeu/gosh/cmd/path
+echo 'function goto { cd $(path $*); }' >> ~/.profile  && source ~/.profile
 goto go src net
 
 In fish:
-go get github.com/aoeu/gosh/cmd//home/aoeu/ir/bin/path
+go get github.com/aoeu/gosh/cmd/path
 function goto
-	cd (/home/aoeu/ir/bin/path $argv)
+	cd (path $argv)
 end
 funcsave goto
 goto go src net
 ```
 ### trash
 ```
-Usage of /home/aoeu/ir/bin/trash:
+Usage of trash:
   -any
 	Trash any possible arguments, ignoring any invalid arguments.
   -dirs
