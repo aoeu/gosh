@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"text/template"
+
+	"github.com/aoeu/gosh"
 )
 
 var usageTemplate = `usage: {{.}} [token]...
@@ -17,6 +18,7 @@ text do not contain the provided text tokens are printed to
 standard output.
 
 examples:
+
 	find . -name '*.yava' | {{.}} generated-sources target test
 	cat works_of_shakespeare.txt | {{.}} thou thee thine
 
@@ -24,24 +26,8 @@ flags:
 
 `
 
-func usage() {
-	var t *template.Template
-	var err error
-	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	// TODO(aoeu): Print default flags before printing usage examples.
-	flag.PrintDefaults()
-	os.Exit(2)
-}
-
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	args := struct {
 		matchAll bool
 	}{}
