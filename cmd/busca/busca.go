@@ -52,8 +52,12 @@ func main() {
 	for i := 0; i < 2; i++ {
 		select {
 		case path := <-paths:
-			fmt.Println(filepath.Dir(path))
-			os.Exit(0)
+			if fp, err := filepath.Abs(path); err != nil {
+				errs <- err
+			} else {
+				fmt.Println(fp)
+				os.Exit(0)
+			}
 		case err := <-errs:
 			switch err {
 			case errNotFound:
