@@ -12,8 +12,8 @@ import (
 
 var usageTemplate = `usage: {{.}} [token]...
 
-'{{.}}' removes lines of text from standard input that contain any
-of text tokens provided in a space-separated list. Any lines of
+'{{.}}' removes lines of text from standard input that contain
+text tokens provided in a space-separated list. Any lines of
 text do not contain the provided text tokens are printed to
 standard output.
 
