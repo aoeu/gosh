@@ -7,13 +7,18 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+
+	"github.com/aoeu/gosh"
 )
 
-var usageMessage string = `usage: '%s regexp'
+var usageTemplate = `usage: '{{.}} regexp'
 
-%s uses a regular expression to locate files with a matching name under the current working directory.
+'{{.}}' uses a regular expression to locate files with a matching name under the current working directory.
 
-example: %s 'example.*.txt'
+example: 
+
+	{{.}} 'example.*\.txt'
+
 `
 
 var (
@@ -24,19 +29,13 @@ var (
 	done           bool
 )
 
-func usage() {
-	s := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, s, s, s)
-	os.Exit(2)
-}
-
 // TODO(aoeu): Fix a bug that causes a deadlock when the file name is not found.
 
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
 	if len(os.Args) != 2 {
-		usage()
+		flag.Usage()
 	}
 	filenameRegexp = regexp.MustCompile(os.Args[1])
 	wd, err := os.Getwd()
