@@ -20,10 +20,13 @@ Alternatively, install all the programs:
 ```
 usage: 'busca regexp'
 
-busca uses a regular expression to locate files with a matching name under
+'busca' uses a regular expression to locate files with a matching name under
 the current working directory.
 
-example: busca 'example.*.txt'
+example:
+
+	busca 'example.*\.txt'
+
 ```
 ### escribe
 ```
@@ -38,6 +41,25 @@ example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
 echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }'
 >> ~/.profile
 
+```
+### filter
+```
+usage: filter [token]...
+
+'filter' removes lines of text from standard input that contain any
+of text tokens provided in a space-separated list. Any lines of
+text do not contain the provided text tokens are printed to
+standard output.
+
+examples:
+
+	find . -name '*.yava' | filter generated-sources target test
+	cat works_of_shakespeare.txt | filter thou thee thine
+
+flags:
+
+  -all
+	Lines ommitted must match all filters (instead of any filter).
 ```
 ### imagebounds
 ```
