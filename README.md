@@ -89,7 +89,7 @@ files by largest size, in descending order.
 ```
 ### list
 ```
-usage: list [ files ]
+usage: list [file]...
 
 'list' lists the files in the current directory in an actual list,
 instead of columns, which is dissimilar from the 'ls' command in

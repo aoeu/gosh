@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"html/template"
 	"os"
 	"path/filepath"
+
+	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} [ files ]
+var usageTemplate = `usage: {{.}} [file]...
 
 '{{.}}' lists the files in the current directory in an actual list,
 instead of columns, which is dissimilar from the 'ls' command in 
@@ -17,7 +18,8 @@ operating system (or the 'ls -1' command in Unix-like systems).
 
 A glob expression or arbirtary list of files may be provided as arguments.
 
-examples: 
+examples:
+
 	{{.}} 
 	{{.}} a*
 	{{.}} *.txt
@@ -25,23 +27,8 @@ examples:
 
 `
 
-func usage() {
-	var t *template.Template
-	var err error
-	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	flag.PrintDefaults()
-	os.Exit(2)
-}
-
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
 	var files []string
 	var err error
