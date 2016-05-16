@@ -7,6 +7,7 @@ import (
 	"text/template"
 )
 
+
 // UsageFunc takes a text/template string,
 // and uses it to create a flag.Usage function
 // that outputs recommended usage and default
