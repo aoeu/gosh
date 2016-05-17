@@ -30,16 +30,20 @@ example:
 ```
 ### escribe
 ```
-usage: escribe http://example.com/index.html
+usage: escribe URL
 
 escribe downloads the file at the specified web URL and converts any HTML
 to plain text.
 
-example: escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
---goal 50 | less
+example:
 
-echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }'
->> ~/.profile
+	escribe http://example.com/index.html
+
+	escribe https://en.wikipedia.org/wiki/Readability | fmt --split-only
+	--goal 50 | less
+
+	echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 |
+	less; }' >> ~/.profile
 
 ```
 ### filter
