@@ -111,7 +111,7 @@ examples:
 ```
 ### path
 ```
-usage: path relative path to a directory
+usage: path [DIRECTORY]...
 
 path takes a space separated list of directory names of a valid directory tree
 and prints the full path with separators specific to the host Operating System.

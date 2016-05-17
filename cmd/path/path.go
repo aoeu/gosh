@@ -7,10 +7,11 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"text/template"
+
+	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} relative path to a directory
+var usageTemplate = `usage: {{.}} [DIRECTORY]...
 
 {{.}} takes a space separated list of directory names of a valid directory tree and prints the full path with separators specific to the host Operating System.
 
@@ -30,22 +31,9 @@ function goto
 end
 funcsave goto
 goto go src net
+
 `
 
-func usage() {
-	var t *template.Template
-	var err error
-	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	flag.PrintDefaults()
-	os.Exit(2)
-}
 func exists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
 		return false
@@ -62,7 +50,7 @@ func prependIfExists(prefix string, path *string) bool {
 }
 
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
 	dir := strings.Join(os.Args[1:], "/")
 	switch {
