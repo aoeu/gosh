@@ -8,35 +8,24 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"text/template"
 
+	"github.com/aoeu/gosh"
 	"github.com/jaytaylor/html2text"
 )
 
-var usageTemplate = `usage: {{.}} http://example.com/index.html
+var usageTemplate = `usage: {{.}} URL
 
 {{.}} downloads the file at the specified web URL and converts any HTML to plain text.
 
-example: {{.}} https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+examples:
 
-echo 'function leamos() { {{.}} $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
+	{{.}} http://example.com/index.html
+
+	{{.}} https://en.wikipedia.org/wiki/Readability | fmt --split-only --goal 50 | less
+
+	echo 'function leamos() { {{.}} $1 | fmt -40 | pr -w 200 -5 | less; }' >> ~/.profile
 
 `
-
-func usage() {
-	var t *template.Template
-	var err error
-	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	flag.PrintDefaults()
-	os.Exit(2)
-}
 
 func download(u url.URL) ([]byte, error) {
 	client := &http.Client{}
@@ -54,10 +43,10 @@ func download(u url.URL) ([]byte, error) {
 }
 
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
 	if len(os.Args) != 2 {
-		usage()
+		flag.Usage()
 	}
 	u := os.Args[1]
 	URL, err := url.Parse(u)
