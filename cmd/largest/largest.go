@@ -8,7 +8,8 @@ import (
 	"path/filepath"
 	"sort"
 	"text/tabwriter"
-	"text/template"
+
+	"github.com/aoeu/gosh"
 )
 
 type byteSize int64
@@ -62,21 +63,6 @@ files by largest size, in descending order.
 
 `
 
-func usage() {
-	var t *template.Template
-	var err error
-	if t, err = template.New("usage").Parse(usageTemplate); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := t.Execute(os.Stdout, os.Args[0]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	flag.PrintDefaults()
-	os.Exit(2)
-}
-
 func main() {
 	args := struct {
 		under        string
@@ -90,7 +76,7 @@ func main() {
 	// flag.StringVar(&args.within, "within", "", "The directory within to size and rank all files.")
 	flag.IntVar(&args.num, "top", 10, "The top number of files to output.")
 	flag.BoolVar(&args.rightjustify, "rightjustify", false, "Align file paths to the right in output")
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
 	if wd, err := os.Getwd(); args.under == "" && err == nil {
 		args.under = wd
