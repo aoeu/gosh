@@ -14,7 +14,6 @@ var usageTemplate = `usage: {{.}} [token]...
 
 '{{.}}' removes lines of text from standard input that contain
 text tokens provided in a space-separated list. Any lines of
->>>>>>> aoeu/factor/list-usage
 text do not contain the provided text tokens are printed to
 standard output.
 
