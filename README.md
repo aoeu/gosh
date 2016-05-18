@@ -67,11 +67,16 @@ flags:
 ```
 ### imagebounds
 ```
-
-usage: imagebounds [image.png image.gif imagejpg ...]
+usage: imagebounds [FILE]...
 
 imagebounds takes a list of PNG, GIF, and JPG files and prints their pixel
 boundary dimenions.
+
+examples:
+
+	imagebounds *.png
+	imagebounds cat.gif dog.png
+	find . -name '*.jpg' | xargs imagebounds
 
 ```
 ### largest

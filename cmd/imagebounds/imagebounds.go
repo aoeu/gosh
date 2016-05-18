@@ -10,27 +10,30 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/aoeu/gosh"
 )
 
-var usageMessage = `
-usage: %v [image.png image.gif imagejpg ...]
+var usageTemplate = `usage: {{.}} [FILE]...
 
-%v takes a list of PNG, GIF, and JPG files and prints their pixel boundary dimenions.
+{{.}} takes a list of PNG, GIF, and JPG files and prints their pixel boundary dimenions.
+
+examples:
+
+	{{.}} *.png
+	{{.}} cat.gif dog.png
+	find . -name '*.jpg' | xargs {{.}}
 
 `
 
-func usage() {
-	p := os.Args[0]
-	fmt.Fprintf(os.Stderr, usageMessage, p, p)
-	flag.PrintDefaults()
-	os.Exit(2)
-}
-
 func main() {
-	flag.Usage = usage
+	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
-
-	for _, name := range os.Args[1:] {
+	f := flag.Args()
+	if len(f) == 0 {
+		flag.Usage()
+	}
+	for _, name := range f {
 		f, err := os.Open(name)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Couldn't open %s : %v", name, err)
