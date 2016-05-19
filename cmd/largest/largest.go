@@ -56,7 +56,7 @@ func (f fileSizes) Less(i, j int) bool { return f[i].byteSize > f[j].byteSize }
 var allFileSizes fileSizes
 var tabw *tabwriter.Writer
 
-var usageTemplate = `usage: {{.}} [-top 20] [-under /path/to/a/directory] [-in /path/to/a/directory]
+var usageTemplate = `Usage: {{.}} [-top 20] [-under /path/to/a/directory] [-in /path/to/a/directory]
 
 {{.}} walks the current or provided directory, and prints out the top N 
 files by largest size, in descending order.

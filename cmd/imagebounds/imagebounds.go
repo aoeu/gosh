@@ -14,11 +14,11 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} [FILE]...
+var usageTemplate = `Usage: {{.}} [FILE]...
 
 {{.}} takes a list of PNG, GIF, and JPG files and prints their pixel boundary dimenions.
 
-examples:
+Examples:
 
 	{{.}} *.png
 	{{.}} cat.gif dog.png

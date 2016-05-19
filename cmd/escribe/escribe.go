@@ -13,11 +13,11 @@ import (
 	"github.com/jaytaylor/html2text"
 )
 
-var usageTemplate = `usage: {{.}} URL
+var usageTemplate = `Usage: {{.}} URL
 
 {{.}} downloads the file at the specified web URL and converts any HTML to plain text.
 
-examples:
+Examples:
 
 	{{.}} http://example.com/index.html
 

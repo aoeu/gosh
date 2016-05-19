@@ -11,11 +11,11 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: '{{.}} regexp'
+var usageTemplate = `Usage: '{{.}} regexp'
 
 '{{.}}' uses a regular expression to locate files with a matching name under the current working directory.
 
-example: 
+Example:
 
 	{{.}} 'example.*\.txt'
 

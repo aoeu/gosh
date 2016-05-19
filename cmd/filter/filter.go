@@ -10,19 +10,19 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} [token]...
+var usageTemplate = `Usage: {{.}} [token]...
 
 '{{.}}' removes lines of text from standard input that contain
 text tokens provided in a space-separated list. Any lines of
 text do not contain the provided text tokens are printed to
 standard output.
 
-examples:
+Examples:
 
 	find . -name '*.yava' | {{.}} generated-sources target test
 	cat works_of_shakespeare.txt | {{.}} thou thee thine
 
-flags:
+Flags:
 
 `
 

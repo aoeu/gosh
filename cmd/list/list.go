@@ -9,7 +9,7 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} [file]...
+var usageTemplate = `Usage: {{.}} [file]...
 
 '{{.}}' lists the files in the current directory in an actual list,
 instead of columns, which is dissimilar from the 'ls' command in 
@@ -18,7 +18,7 @@ operating system (or the 'ls -1' command in Unix-like systems).
 
 A glob expression or arbirtary list of files may be provided as arguments.
 
-examples:
+Examples:
 
 	{{.}} 
 	{{.}} a*

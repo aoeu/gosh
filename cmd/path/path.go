@@ -11,26 +11,32 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `usage: {{.}} [DIRECTORY]...
+var usageTemplate = `Usage: {{.}} [DIRECTORY]...
 
 {{.}} takes a space separated list of directory names of a valid directory tree and prints the full path with separators specific to the host Operating System.
 
 If the directory names do not create a complete path, a path under the user's home directory is attempted, then a path derived from the root directory, and finally an error is printed if none are found to be valid paths.
 
-example: {{.}} go src encoding json 
+Example:
 
-In a Bourne-compatible shell:
-go get github.com/aoeu/gosh/cmd/{{.}}
-echo 'function goto { cd $({{.}} $*); }' >> ~/.profile  && source ~/.profile
-goto go src net
+	{{.}} go src encoding json
 
-In fish:
-go get github.com/aoeu/gosh/cmd/{{.}}
-function goto
-	cd ({{.}} $argv)
-end
-funcsave goto
-goto go src net
+Recipes:
+
+	In a Bourne-compatible shell:
+
+		go get github.com/aoeu/gosh/cmd/{{.}}
+		echo 'function goto { cd $({{.}} $*); }' >> ~/.profile  && source ~/.profile
+		goto go src net
+
+	In fish:
+
+		go get github.com/aoeu/gosh/cmd/{{.}}
+		function goto
+			cd ({{.}} $argv)
+		end
+		funcsave goto
+		goto go src net
 
 `
 
