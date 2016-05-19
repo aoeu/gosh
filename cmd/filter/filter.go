@@ -12,15 +12,27 @@ import (
 
 var usageTemplate = `Usage: {{.}} [token]...
 
-'{{.}}' removes lines of text from standard input that contain
-text tokens provided in a space-separated list. Any lines of
-text do not contain the provided text tokens are printed to
-standard output.
+'{{.}}' removes or accepts lines of text from standard input
+that contain text tokens provided in a space-separated list.
+Any lines of text that match the filter(s) and constraints are
+printed standard output.
 
 Examples:
 
 	find . -name '*.yava' | {{.}} generated-sources target test
+
 	cat works_of_shakespeare.txt | {{.}} thou thee thine
+
+	cat << EOF | filter -accept -all cat dog
+		o
+		cat
+		dog
+		cat dog
+		dog cat
+		tacocat
+		dogmaomagod
+		grep -v dog | grep -v cat | grep -v 'cat.*dog'
+		EOF
 
 Flags:
 
@@ -30,6 +42,7 @@ func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	args := struct {
 		matchAll bool
+		accept bool
 	}{}
 	flag.BoolVar(&args.matchAll, "all", false, "Lines ommitted must match all filters (instead of any filter).")
 	flag.Parse()
@@ -37,7 +50,6 @@ func main() {
 	if args.matchAll && len(filters) == 0 {
 		flag.Usage()
 	}
-
 	input := bufio.NewScanner(os.Stdin)
 	for input.Scan() {
 		t := input.Text()
