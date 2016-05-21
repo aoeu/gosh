@@ -12,10 +12,10 @@ import (
 
 var usageTemplate = `Usage: {{.}} [token]...
 
-'{{.}}' removes or accepts lines of text from standard input
-that contain text tokens provided in a space-separated list.
-Any lines of text that match the filter(s) and constraints are
-printed standard output.
+'{{.}}' removes lines of text from standard input that
+contain text tokens provided in a space-separated list.
+Any lines of text that match the filter(s) and constraints
+are printed standard output.
 
 Examples:
 
@@ -47,7 +47,7 @@ func main() {
 	flag.BoolVar(&args.matchAll, "all", false, "Lines ommitted must match all filters (instead of any filter).")
 	flag.Parse()
 	filters := flag.Args()
-	if args.matchAll && len(filters) == 0 {
+	if len(filters) == 0 {
 		flag.Usage()
 	}
 	input := bufio.NewScanner(os.Stdin)

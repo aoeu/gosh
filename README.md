@@ -48,19 +48,31 @@ example:
 ```
 ### filter
 ```
-usage: filter [token]...
+Usage: filter [token]...
 
-'filter' removes lines of text from standard input that contain any
-of text tokens provided in a space-separated list. Any lines of
-text do not contain the provided text tokens are printed to
-standard output.
+'filter' removes lines of text from standard input that
+contain text tokens provided in a space-separated list.
+Any lines of text that match the filter(s) and constraints
+are printed standard output.
 
-examples:
+Examples:
 
 	find . -name '*.yava' | filter generated-sources target test
+
 	cat works_of_shakespeare.txt | filter thou thee thine
 
-flags:
+	cat << EOF | filter -accept -all cat dog
+		o
+		cat
+		dog
+		cat dog
+		dog cat
+		tacocat
+		dogmaomagod
+		grep -v dog | grep -v cat | grep -v 'cat.*dog'
+		EOF
+
+Flags:
 
   -all
 	Lines ommitted must match all filters (instead of any filter).
@@ -81,7 +93,7 @@ examples:
 ```
 ### largest
 ```
-usage: largest [-top 20] [-under /path/to/a/directory] [-in
+Usage: largest [-top 20] [-under /path/to/a/directory] [-in
 /path/to/a/directory]
 
 largest walks the current or provided directory, and prints out the top N
