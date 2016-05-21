@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
+	"regexp"
 
 	"github.com/aoeu/gosh"
 )
@@ -13,7 +13,7 @@ import (
 var usageTemplate = `Usage: {{.}} [token]...
 
 '{{.}}' removes lines of text from standard input that
-contain text tokens provided in a space-separated list.
+contain regular expressions provided in a space-separated list.
 Any lines of text that match the filter(s) and constraints
 are printed standard output.
 
@@ -42,7 +42,6 @@ func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	args := struct {
 		matchAll bool
-		accept bool
 	}{}
 	flag.BoolVar(&args.matchAll, "all", false, "Lines ommitted must match all filters (instead of any filter).")
 	flag.Parse()
@@ -56,9 +55,14 @@ func main() {
 		matchedAny := false
 		matchedAll := true
 		for _, f := range filters {
-			if strings.Contains(t, f) {
+			match, err := regexp.MatchString(f, t)
+			switch {
+			case err != nil:
+				fmt.Println("Filter expression %v produced error %v", f, err)
+				os.Exit(1)
+			case match:
 				matchedAny = true
-			} else {
+			default:
 				matchedAll = false
 			}
 		}

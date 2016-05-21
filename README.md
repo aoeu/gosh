@@ -51,7 +51,7 @@ example:
 Usage: filter [token]...
 
 'filter' removes lines of text from standard input that
-contain text tokens provided in a space-separated list.
+contain regular expressions provided in a space-separated list.
 Any lines of text that match the filter(s) and constraints
 are printed standard output.
 
