@@ -21,8 +21,7 @@ Alternatively, install all the programs:
 ## Program Descriptions
 
 EOF
-go install cmd/...
 wd=$PWD
 cd cmd
-for f in `list *`; do echo "### $f  " && echo "\`\`\`" && $f -help 2>&1 || echo "\`\`\`" ; done | fmt -s -w 80 >> ../$out
+for f in `list *`; do cd $f && go install && cd .. && echo "### $f  " && echo "\`\`\`" && $f -help 2>&1 || echo "\`\`\`" ; done | fmt -s -w 80 >> ../$out
 cd $wd

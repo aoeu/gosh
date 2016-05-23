@@ -18,24 +18,24 @@ Alternatively, install all the programs:
 
 ### busca
 ```
-usage: 'busca regexp'
+Usage: 'busca regexp'
 
 'busca' uses a regular expression to locate files with a matching name under
 the current working directory.
 
-example:
+Example:
 
 	busca 'example.*\.txt'
 
 ```
 ### escribe
 ```
-usage: escribe URL
+Usage: escribe URL
 
 escribe downloads the file at the specified web URL and converts any HTML
 to plain text.
 
-example:
+Examples:
 
 	escribe http://example.com/index.html
 
@@ -51,7 +51,7 @@ example:
 Usage: filter [token]...
 
 'filter' removes lines of text from standard input that
-contain regular expressions provided in a space-separated list.
+match regular expressions provided in a space-separated list.
 Any lines of text that match the filter(s) and constraints
 are printed standard output.
 
@@ -79,12 +79,12 @@ Flags:
 ```
 ### imagebounds
 ```
-usage: imagebounds [FILE]...
+Usage: imagebounds [FILE]...
 
 imagebounds takes a list of PNG, GIF, and JPG files and prints their pixel
 boundary dimenions.
 
-examples:
+Examples:
 
 	imagebounds *.png
 	imagebounds cat.gif dog.png
@@ -110,7 +110,7 @@ files by largest size, in descending order.
 ```
 ### list
 ```
-usage: list [file]...
+Usage: list [file]...
 
 'list' lists the files in the current directory in an actual list,
 instead of columns, which is dissimilar from the 'ls' command in
@@ -119,7 +119,8 @@ operating system (or the 'ls -1' command in Unix-like systems).
 
 A glob expression or arbirtary list of files may be provided as arguments.
 
-examples:
+Examples:
+
 	list
 	list a*
 	list *.txt
@@ -128,7 +129,7 @@ examples:
 ```
 ### path
 ```
-usage: path [DIRECTORY]...
+Usage: path [DIRECTORY]...
 
 path takes a space separated list of directory names of a valid directory tree
 and prints the full path with separators specific to the host Operating System.
@@ -137,20 +138,28 @@ If the directory names do not create a complete path, a path under the user's
 home directory is attempted, then a path derived from the root directory,
 and finally an error is printed if none are found to be valid paths.
 
-example: path go src encoding json
+Example:
 
-In a Bourne-compatible shell:
-go get github.com/aoeu/gosh/cmd/path
-echo 'function goto { cd $(path $*); }' >> ~/.profile  && source ~/.profile
-goto go src net
+	path go src encoding json
 
-In fish:
-go get github.com/aoeu/gosh/cmd/path
-function goto
-	cd (path $argv)
-end
-funcsave goto
-goto go src net
+Recipes:
+
+	In a Bourne-compatible shell:
+
+		go get github.com/aoeu/gosh/cmd/path
+		echo 'function goto { cd $(path $*); }' >> ~/.profile  &&
+		source ~/.profile
+		goto go src net
+
+	In fish:
+
+		go get github.com/aoeu/gosh/cmd/path
+		function goto
+			cd (path $argv)
+		end
+		funcsave goto
+		goto go src net
+
 ```
 ### trash
 ```

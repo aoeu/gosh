@@ -13,7 +13,7 @@ import (
 var usageTemplate = `Usage: {{.}} [token]...
 
 '{{.}}' removes lines of text from standard input that
-contain regular expressions provided in a space-separated list.
+match regular expressions provided in a space-separated list.
 Any lines of text that match the filter(s) and constraints
 are printed standard output.
 
