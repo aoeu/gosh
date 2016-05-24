@@ -61,7 +61,7 @@ Examples:
 
 	cat works_of_shakespeare.txt | filter thou thee thine
 
-	cat << EOF | filter -accept -all cat dog
+	cat << EOF | filter -all cat dog
 		o
 		cat
 		dog
@@ -126,6 +126,33 @@ Examples:
 	list *.txt
 	list foo.bar *.fiz qux.baz *.buz
 
+```
+### pasa
+```
+Usage: pasa [regular expression]...
+
+'pasa' prints lines of text from standard input that match
+regular expressions provided in a space-separated list.
+
+Any lines of text that do not match the regular expressions are
+ommitted from standard output.
+
+Examples:
+
+	find . | pasa '.*\..ava' > yava_and_yavascript_filenames.txt
+
+	cat << EOF || pasa dog > /tmp/no_cats.txt
+		cat
+		dog
+		cat dog
+		dog cat
+		EOF
+
+Flags:
+
+  -all
+	Lines accepted must match all regular expressions provided (instead
+	of any).
 ```
 ### path
 ```

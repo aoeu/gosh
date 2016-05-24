@@ -23,7 +23,7 @@ Examples:
 
 	cat works_of_shakespeare.txt | {{.}} thou thee thine
 
-	cat << EOF | filter -accept -all cat dog
+	cat << EOF | {{.}} -all cat dog
 		o
 		cat
 		dog
