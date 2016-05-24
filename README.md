@@ -46,22 +46,22 @@ Examples:
 	less; }' >> ~/.profile
 
 ```
-### filter
+### filtra
 ```
-Usage: filter [token]...
+Usage: filtra [token]...
 
-'filter' removes lines of text from standard input that
+'filtra' removes lines of text from standard input that
 match regular expressions provided in a space-separated list.
-Any lines of text that match the filter(s) and constraints
+Any lines of text that match the regular expressions and constraints
 are printed standard output.
 
 Examples:
 
-	find . -name '*.yava' | filter generated-sources target test
+	find . -name '*.yava' | filtra generated-sources target test
 
-	cat works_of_shakespeare.txt | filter thou thee thine
+	cat works_of_shakespeare.txt | filtra thou thee thine
 
-	cat << EOF | filter -all cat dog
+	cat << EOF | filtra -all cat dog
 		o
 		cat
 		dog

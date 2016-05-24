@@ -14,7 +14,7 @@ var usageTemplate = `Usage: {{.}} [token]...
 
 '{{.}}' removes lines of text from standard input that
 match regular expressions provided in a space-separated list.
-Any lines of text that match the filter(s) and constraints
+Any lines of text that match the regular expressions and constraints
 are printed standard output.
 
 Examples:
