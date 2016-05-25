@@ -190,7 +190,30 @@ Recipes:
 ```
 ### trash
 ```
-Usage of trash:
+Usage: trash [FILE]... [DIRECTORY]...
+
+'trash' moves files or directories provided as arguments
+to a folder, referred to as the "trash bin." The default
+location of the trash bin is a directory named 'trash' in
+the user's home directory.
+
+Parent directories are created in the trash bin
+corresponding to the absolute path that the specified file
+or directories resided in until moved by the 'trash' command.
+Additionally, a root folder is created in the trash bin
+named after the date and time the trash command was run,
+where the mentioned parent directories and arguments are
+stored under.
+
+This allows a user to run the 'trash' command on several
+files or directories with the exact same name, even at
+different points in time, with the context and absolute path
+of each file represented by the final location within the
+trash bin.
+
+This enables users to restore files to their former locations
+using just the 'mv' command.
+
   -any
 	Trash any possible arguments, ignoring any invalid arguments.
   -dirs
