@@ -214,6 +214,32 @@ trash bin.
 This enables users to restore files to their former locations
 using just the 'mv' command.
 
+Examples:
+
+	trash $HOME/Downloads/*
+
+	trash -all -empty ­dirs *
+
+	trash -all -files *.yava
+
+	$ # List the current directory, date, and time.
+	$ pwd
+	/home/aoeu/Documents
+	$ date
+	Wed May 25 17:15:21 EDT 2016
+	$ # Discard a file using trash
+	$ trash Objection.yava
+	$ # Examine that the file has been moved to the trash bin.
+	$ ls $HOME/trash/2016-05-25T17:15:25-04:00/home/aoeu/Documents/
+	Objection.yava
+	$ # Restore the file from the trash bin.
+	$ mv
+	$HOME/trash/2016-05-25T17:15:25-04:00/home/aoeu/Documents/Objection.yava
+	$ ls
+	Objection.yava
+
+Flags:
+
   -any
 	Trash any possible arguments, ignoring any invalid arguments.
   -dirs
