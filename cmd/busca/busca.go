@@ -29,8 +29,6 @@ var (
 	done           bool
 )
 
-// TODO(aoeu): Fix a bug that causes a deadlock when the file name is not found.
-
 func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
@@ -47,6 +45,7 @@ func main() {
 	paths = make(chan string)
 	go func() {
 		errs <- Walk(wd, Mark)
+		close(errs)
 	}()
 	for i := 0; i < 2; i++ {
 		select {
