@@ -16,18 +16,6 @@ Alternatively, install all the programs:
 
 ## Program Descriptions
 
-### busca
-```
-Usage: 'busca regexp'
-
-'busca' uses a regular expression to locate files with a matching name under
-the current working directory.
-
-Example:
-
-	busca 'example.*\.txt'
-
-```
 ### escribe
 ```
 Usage: escribe URL
@@ -186,6 +174,18 @@ Recipes:
 		end
 		funcsave goto
 		goto go src net
+
+```
+### revela
+```
+Usage: 'revela regexp'
+
+'revela' uses a regular expression to locate files with a matching name
+under the current working directory.
+
+Example:
+
+	revela 'example.*\.txt'
 
 ```
 ### trash
