@@ -39,9 +39,9 @@ Examples:
 
 	{{.}} $HOME/Downloads/*
 
-	{{.}} -all -empty ­dirs *
+	{{.}} -any -empty -dirs *
 
-	{{.}} -all -files *.yava
+	{{.}} -files *.yava
 
 	$ # List the current directory, date, and time.
 	$ pwd

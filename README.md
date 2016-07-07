@@ -218,9 +218,9 @@ Examples:
 
 	trash $HOME/Downloads/*
 
-	trash -all -empty ­dirs *
+	trash -any -empty -dirs *
 
-	trash -all -files *.yava
+	trash -files *.yava
 
 	$ # List the current directory, date, and time.
 	$ pwd
