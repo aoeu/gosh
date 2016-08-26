@@ -32,7 +32,7 @@ var (
 func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
-	if len(os.Args) != 2 {
+	if len(flag.Args()) != 1 {
 		flag.Usage()
 	}
 	filenameRegexp = regexp.MustCompile(os.Args[1])
