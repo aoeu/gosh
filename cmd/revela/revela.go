@@ -26,7 +26,7 @@ var (
 	paths          chan string
 	errs           chan error
 	errNotFound    = errors.New("File not found with name matching '%s'\n")
-	done           bool
+	done           chan bool
 )
 
 func main() {
@@ -43,55 +43,68 @@ func main() {
 	}
 	errs = make(chan error)
 	paths = make(chan string)
+	done = make(chan bool)
 	go func() {
-		errs <- Walk(wd, Mark)
-		close(errs)
+		if err := Walk(wd, Mark); err != nil {
+			errs <- err
+		} else {
+			done <- true
+		}
 	}()
-	for i := 0; i < 2; i++ {
+	for {
 		select {
 		case path := <-paths:
 			if fp, err := filepath.Abs(path); err != nil {
 				errs <- err
 			} else {
 				fmt.Println(fp)
-				os.Exit(0)
 			}
 		case err := <-errs:
 			switch err {
+			case nil:
+				continue
 			case errNotFound:
 				fmt.Fprintf(os.Stderr, err.Error(), os.Args[1])
 				os.Exit(0)
 			default:
 				fmt.Fprintln(os.Stderr, err)
 				os.Exit(1)
-			case nil:
 			}
+		case <-done:
+			os.Exit(0)
 		}
 	}
 }
 
 func Mark(path string, info os.FileInfo, err error) error {
 	switch {
-	case done || info.IsDir():
+	case info.IsDir():
 		return nil
 	case err != nil && err != os.ErrPermission:
 		return err
 	case filenameRegexp.Match([]byte(info.Name())):
-		done = true
 		paths <- path
 		return nil
+	default:
+		return errNotFound
 	}
-	return errNotFound
 }
 
-// Code below this line is an excerpt from the standard library package named "filepath."
+// Code below this line is modified excerpt from
+// the standard library package named "filepath."
 
 func Walk(root string, walkFn filepath.WalkFunc) error {
+	var e error
 	info, err := os.Lstat(root)
-	if err != nil {
-		return walkFn(root, nil, err)
+	switch {
+	case err == nil:
+		e = walk(root, info, walkFn)
+	case err == errNotFound:
+		e = err
+	default:
+		e = walkFn(root, nil, err)
 	}
-	return walk(root, info, walkFn)
+	return e
 }
 
 var SkipDir = errors.New("skip this directory")
