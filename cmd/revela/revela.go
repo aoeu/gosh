@@ -77,6 +77,9 @@ func main() {
 }
 
 func Mark(path string, info os.FileInfo, err error) error {
+    if info == nil { // TODO(aoeu): Why can this case happen (resulting in panics)?
+		return nil
+    }
 	switch {
 	case info.IsDir():
 		return nil
