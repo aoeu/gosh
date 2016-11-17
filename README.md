@@ -176,6 +176,20 @@ Recipes:
 		goto go src net
 
 ```
+### println
+```
+Usage: 'println text'
+
+'println' prints any provided text to standard output followed by a newline
+character.
+
+Example:
+
+	println "Hello, $PWD"
+	println "Why not use" the echo command?
+	'http://www.in-ulm.de/~mascheck/various/echo+printf'
+
+```
 ### revela
 ```
 Usage: 'revela regexp'
