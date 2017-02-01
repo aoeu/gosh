@@ -245,6 +245,33 @@ Example:
 	'http://www.in-ulm.de/~mascheck/various/echo+printf'
 
 ```
+### replace
+```
+Usage: replace -all [REGULAR EXPRESSION] -with [REPLACEMENT TEXT]
+
+"replace" reads text from standard input, searches for all text that matches
+a supplied regular expression, replaces the matching text with supplied
+replacement text,
+and outputs the resulting text to standard output.
+
+Example:
+
+	$ echo '123. One Two Three' | replace -all '^\d+\.' -with 'Testing:'
+	> Testing: One Two Three
+
+	$ echo '123. One Two Three' | sed -E 's/[0-9]{1,}\.[ ]{1,}/Numbers: /'
+	> Numbers: One Two Three
+	$ echo '123. One Two Three' | replace -with 'Numbers: ' -all '\d+\.\s+'
+	> Numbers: One Two Three
+
+	echo 'sed -E "s/[0-9]{1,}\.[ ]{1,}/Numbers: /"' | replace -all
+	'sed.*'  -with 'replace -all "\d+\.\s+" -with "Numbers: "'
+
+  -all string
+	The regular expression to search for in the input text.
+  -with string
+	The literal text to replace any regular expression matches with.
+```
 ### revela
 ```
 Usage: 'revela regexp'

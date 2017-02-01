@@ -18,7 +18,7 @@ and outputs the resulting text to standard output.
 
 Example:
 
-	$ echo '123. One Two Three' | reemplaza -all '^\d+\.' -with 'Testing:'
+	$ echo '123. One Two Three' | {{.}} -all '^\d+\.' -with 'Testing:'
 	> Testing: One Two Three
 
 	$ echo '123. One Two Three' | sed -E 's/[0-9]{1,}\.[ ]{1,}/Numbers: /'
