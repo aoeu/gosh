@@ -176,6 +176,61 @@ Recipes:
 		goto go src net
 
 ```
+### primero
+```
+Usage: primero [ [ < filepath] | [-of <filepath> ] ]
+
+"primero" prints the first line of text from standard input or a specified file
+to standard output that is not empty when trimmed of leading and trailing
+whitespace characters, and exits with a non-error status.
+
+Otherwise, "primero"  exits with an error status and prints nothing to
+standard output or standard error.
+
+The emitted line of text printed to standard output has all leading and
+trailing whitespace characters removed, followed by a newline.
+
+Examples:
+	$ find $GOPATH/src -name '*.go' | primero
+	>
+	/home/username/go/src/golang.org/x/tools/benchmark/parse/parse_test.go
+	$ echo $?
+	> 0
+
+	$ primero < /tmp/empty_file
+	$ echo $?
+	> 1
+
+	$ touch /tmp/arbitrary_file
+	$ sam -d /tmp/arbitrary_file
+	>  -. /tmp/arbitrary_file
+	> a
+	>
+	>
+	>	  golang
+	> awk
+	>	  sed
+	>    grep
+	>
+	> .
+	> w
+	> /tmp/arbitrary_file: #30
+	> q
+	$ primero -of /tmp/arbitrary_file
+	> golang
+
+	$ cat << EOF | primero
+
+			first
+		second
+		third
+		fourth
+		EOF
+	> first
+
+  -of string
+	A filepath to print the first line of.
+```
 ### println
 ```
 Usage: 'println text'
