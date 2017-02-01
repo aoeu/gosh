@@ -349,3 +349,57 @@ Flags:
   -into string
 	Put all trash into a specific directory. (default "/home/aoeu/trash")
 ```
+### ultimo
+```
+Usage: ultimo [ [ < filepath] | [-of <filepath> ] ]
+
+"ultimo" prints the last line of text from standard input or a specified file
+to standard output that is not empty when trimmed of leading and trailing
+whitespace characters, and exits with a non-error status.
+
+Otherwise, "ultimo"  exits with an error status and prints nothing to
+standard output or standard error.
+
+The emitted line of text printed to standard output has all leading and
+trailing whitespace characters removed, followed by a newline.
+
+Examples:
+	$ find $GOPATH/src -name '*.go' | ultimo
+	> /home/username/go/src/9fans.net/go/draw/draw.go
+	$ echo $?
+	> 0
+
+	$ ultimo < /tmp/empty_file
+	$ echo $?
+	> 1
+
+	$ touch /tmp/arbitrary_file
+	$ sam -d /tmp/arbitrary_file
+	>  -. /tmp/arbitrary_file
+	> a
+	>
+	>
+	>	  golang
+	> awk
+	>	  sed
+	>    grep
+	>
+	> .
+	> w
+	> /tmp/arbitrary_file: #30
+	> q
+	$ ultimo -of /tmp/arbitrary_file
+	> grep
+
+	$ cat << EOF | ultimo
+
+			first
+		second
+		third
+		fourth
+		EOF
+	> fourth
+
+  -of string
+	A filepath to print the first line of.
+```
