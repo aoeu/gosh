@@ -26,6 +26,13 @@ Example:
 	find . -name '*.go' | edita
 `
 
+func editorExists(path string) bool {
+	if _, err := os.Stat(path); err != nil {
+		return false
+	}
+	return true
+}
+
 func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	args := struct {
@@ -49,11 +56,14 @@ func main() {
 	case args.editorPath == "":
 		fmt.Fprintln(os.Stderr, "No text editor specificed as an argument and none set in EDITOR environment variable")
 		flag.Usage()
+	case !editorExists(args.editorPath):
+		fmt.Fprintf(os.Stderr, "No editor exists at the specified path: %v\n", args.editorPath)
+		flag.Usage()
 	case len(files) == 0:
 		fmt.Fprintln(os.Stderr, "No text files were provided to edit.")
 		flag.Usage()
 	}
-	// TODO(aoeu): Verify that the editor and arguments are valid file paths before executing a command.
+	// TODO(aoeu): Assert that files have valid paths before executing a command.
 	cmd := exec.Command(args.editorPath, files...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
