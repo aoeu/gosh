@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/aoeu/gosh"
 )
@@ -20,6 +22,8 @@ Example:
 	EDITOR=$PLAN9PORT/bin/acme export EDITOR && {{.}} /tmp/file1.txt
 
 	go get github.com/aoeu/acme/A && {{.}} -with A /tmp/file1.txt /tmp/file2.txt
+
+	find . -name '*.go' | edita
 `
 
 func main() {
@@ -32,20 +36,29 @@ func main() {
 	if args.editorPath == "" {
 		args.editorPath = os.Getenv("EDITOR")
 	}
+	files := flag.Args()
+	if len(files) == 0 {
+		input := bufio.NewScanner(os.Stdin)
+		for input.Scan() {
+			if s := strings.Trim(input.Text(), "\t\n"); s != "" {
+				files = append(files, s)
+			}
+		}
+	}
 	switch {
 	case args.editorPath == "":
 		fmt.Fprintln(os.Stderr, "No text editor specificed as an argument and none set in EDITOR environment variable")
 		flag.Usage()
-	case len(flag.Args()) == 0:
+	case len(files) == 0:
 		fmt.Fprintln(os.Stderr, "No text files were provided to edit.")
 		flag.Usage()
 	}
 	// TODO(aoeu): Verify that the editor and arguments are valid file paths before executing a command.
 	// TODO(aoeu): Can line editors like sam and ed be supported?
-	cmd := exec.Command(args.editorPath, flag.Args()...)
+	cmd := exec.Command(args.editorPath, files...)
 	err := cmd.Run()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when running editor %v to edit files %v: %v", args.editorPath, flag.Args(), err)
+		fmt.Fprintf(os.Stderr, "Error when running editor %v to edit files %v: %v", args.editorPath, files, err)
 		os.Exit(1)
 	}
 }
