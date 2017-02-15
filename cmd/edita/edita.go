@@ -54,8 +54,10 @@ func main() {
 		flag.Usage()
 	}
 	// TODO(aoeu): Verify that the editor and arguments are valid file paths before executing a command.
-	// TODO(aoeu): Can line editors like sam and ed be supported?
 	cmd := exec.Command(args.editorPath, files...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when running editor %v to edit files %v: %v", args.editorPath, files, err)
