@@ -70,7 +70,20 @@ func main() {
 		fmt.Fprintln(os.Stderr, "No text files were provided to edit.")
 		flag.Usage()
 	}
-	// TODO(aoeu): Assert that files have valid paths before executing a command.
+	invalidPaths := make([]string, 0)
+	for _, f := range files {
+		if _, err := os.Stat(f); err != nil {
+			p := strings.Split(f, "/")
+			dir := strings.Join(p[0:len(p)-1], "/")
+			if _, err = os.Stat(dir); err != nil {
+				invalidPaths = append(invalidPaths, f)
+			}
+		}
+	}
+	if len(invalidPaths) != 0 {
+		fmt.Fprintf(os.Stderr, "Some paths of files to edit are both files that do not exist and have paths with non-existant directories: %v\n", invalidPaths)
+		os.Exit(1)
+	}
 	cmd := exec.Command(args.editorPath, files...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
