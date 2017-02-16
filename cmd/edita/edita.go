@@ -17,6 +17,10 @@ var usageTemplate = `Usage '{{.}} filepath [filepath...]'
 referenced in the EDITOR environment variable, or exits with an
 error if no editor was specified and the EDITOR environment variable is not set.
 
+The absolute path of the text editor may be specified as an argument,
+or just the name of the text editor if the text editor exists in any directory
+specified within the PATH environment variable.
+
 Example:
 
 	EDITOR=$PLAN9PORT/bin/acme export EDITOR && {{.}} /tmp/file1.txt
@@ -40,8 +44,11 @@ func main() {
 	}{}
 	flag.StringVar(&args.editorPath, "with", "", "The text editor to edit text files with.")
 	flag.Parse()
-	if args.editorPath == "" {
+	switch {
+	case args.editorPath == "":
 		args.editorPath = os.Getenv("EDITOR")
+	case !editorExists(args.editorPath):
+		args.editorPath, _ = exec.LookPath(args.editorPath)
 	}
 	files := flag.Args()
 	if len(files) == 0 {
