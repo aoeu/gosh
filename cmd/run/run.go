@@ -12,7 +12,7 @@ import (
 	"github.com/aoeu/gosh"
 )
 
-var usageTemplate = `Usage '{{.}} -with [program name] -commands [command; command...]
+var usageTemplate = `Usage '{{.}} -with <program name> -commands "<command> [command; command...]" [-on <filepath>]
 
 '{{.}}' executes commands with the specified program.
 
@@ -28,8 +28,11 @@ Example:
 	>
 	> EOF
 
-	$ {{.}} -with git -commands "checkout release; fetch; merge gerrit/release; \
-	> branch cr/draft/shiny-feature; checkout cr/draft/shiny-feature; merge --squash shiny-feature; \
+	$ {{.}} -with git -commands "checkout release; \
+	> fetch; merge gerrit/release; \
+	> branch cr/draft/shiny-feature; \
+	> checkout cr/draft/shiny-feature; \
+	> merge --squash shiny-feature; \
 	> mergetool; commit -F $HOME/commitMessage.txt"
 
 `

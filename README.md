@@ -265,7 +265,8 @@ Example:
 ```
 ### run  
 ```
-Usage 'run -with [program name] -commands [command; command...]
+Usage 'run -with <program name> -commands "<command> [command; command...]" [-on
+<filepath>]
 
 'run' executes commands with the specified program.
 
@@ -279,9 +280,9 @@ Example:
 
 	$ cat << EOF | run -with git > add run.go > > EOF
 
-	$ run -with git -commands "checkout release; fetch; merge
-	gerrit/release; \ > branch cr/draft/shiny-feature; checkout
-	cr/draft/shiny-feature; merge --squash shiny-feature; \ > mergetool;
+	$ run -with git -commands "checkout release; \ > fetch; merge
+	gerrit/release; \ > branch cr/draft/shiny-feature; \ > checkout
+	cr/draft/shiny-feature; \ > merge --squash shiny-feature; \ > mergetool;
 	commit -F $HOME/commitMessage.txt"
 
   -commands string
