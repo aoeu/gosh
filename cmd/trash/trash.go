@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
@@ -43,6 +44,8 @@ Examples:
 
 	{{.}} -files *.yava
 
+	find . -name '*.yava' | {{.}} -files
+
 	$ # List the current directory, date, and time.
 	$ pwd
 	/home/aoeu/Documents
@@ -64,11 +67,11 @@ Flags:
 
 func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
-	if noArgs() {
-		os.Exit(0)
-	}
 	args := newArguments()
 	args.parse()
+	if args.none() {
+		os.Exit(0)
+	}
 	f := args.flags
 	switch {
 	case !f.any:
@@ -120,7 +123,16 @@ func (a *arguments) parse() error {
 	trashBin := fmt.Sprintf("%v/%v", os.Getenv("HOME"), "trash")
 	flag.StringVar(&a.into, "into", trashBin, "Put all trash into a specific directory.")
 	flag.Parse()
-	return a.parsePaths(flag.Args())
+	paths := flag.Args()
+	if len(paths) == 0 {
+		input := bufio.NewScanner(os.Stdin)
+		for input.Scan() {
+			if s := strings.Trim(input.Text(), "\t\n"); s != "" {
+				paths = append(paths, s)
+			}
+		}
+	}
+	return a.parsePaths(paths)
 }
 
 func must(mkdirFunc func(string, os.FileMode) error, dirname string) {
@@ -159,15 +171,15 @@ func (a *arguments) pathsByType() (files, dirs []string) {
 	return files, dirs
 }
 
-func noArgs() bool {
-	return len(os.Args[1:]) == 0
-}
-
 type arguments struct {
 	flags
 	files       []file
 	nonExistent []string
 	nonEmpty    []string
+}
+
+func (a arguments) none() bool {
+	return len(a.files) == 0 && len(os.Args[1:]) == 0
 }
 
 type flags struct {
