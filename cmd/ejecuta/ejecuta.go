@@ -19,7 +19,18 @@ var usageTemplate = `Usage '{{.}} -with [program name] -commands [command; comma
 
 Example:
 
-	{{.}} -with git -commands 'checkout release; fetch; merge gerrit/release; branch cr/draft/shiny-feature; merge --squash shiny-feature; commit -F $HOME/commitMessage.txt'
+	{{.}} -with git -commands 'add {{.}}.go; commit -m "Adding command to execute subcommands of provided command"'
+
+	{{.}} -with go -commands 'fmt; vet; install' -on {{.}}.go
+
+	$ cat << EOF | {{.}} -with git
+	> add {{.}}.go
+	>
+	> EOF
+
+	$ {{.}} -with git -commands "checkout release; fetch; merge gerrit/release; \
+	> branch cr/draft/shiny-feature; checkout cr/draft/shiny-feature; merge --squash shiny-feature; \
+	> mergetool; commit -F $HOME/commitMessage.txt"
 
 `
 
@@ -29,9 +40,11 @@ func main() {
 	args := struct {
 		executableFile string
 		commands       string
+		targetPath     string
 	}{}
 	flag.StringVar(&args.executableFile, "with", "", "The executable file (command) to execute commands (sub-commands) with.")
 	flag.StringVar(&args.commands, "commands", "", "The commands (sub-commands) to be executed as arguments to the executable file (command).")
+	flag.StringVar(&args.targetPath, "on", "", "A target path to execute the subcommands on, appended as a final arugment in the list of subcommands to be executed by the executable file (command).")
 	flag.Parse()
 	switch {
 	case args.executableFile == "":
@@ -47,20 +60,20 @@ func main() {
 		in = bufio.NewScanner(strings.NewReader(args.commands))
 	}
 	for in.Scan() {
-		if s := strings.Split(in.Text(), ";"); len(s) != 0 {
-			commands = append(commands, s...)
+		if s := strings.TrimSpace(in.Text()); len(s) != 0 {
+			commands = append(commands, strings.Split(s, ";")...)
 		}
 	}
-	lastQuote := rune(0)
+	endQuote := rune(0)
 	f := func(r rune) bool {
 		switch {
-		case r == lastQuote:
-			lastQuote = rune(0)
+		case r == endQuote:
+			endQuote = rune(0)
 			return false
-		case lastQuote != rune(0):
+		case endQuote != rune(0):
 			return false
 		case unicode.In(r, unicode.Quotation_Mark):
-			lastQuote = r
+			endQuote = r
 			return false
 		default:
 			return unicode.IsSpace(r)
@@ -72,7 +85,9 @@ func main() {
 		for i := 0; i < len(cc); i++ {
 			cc[i] = strings.Trim(cc[i], "\"'")
 		}
-		fmt.Println(c, strings.Join(cc, "|"))
+		if args.targetPath != "" {
+			cc = append(cc, args.targetPath)
+		}
 		cmd := exec.Command(args.executableFile, cc...)
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
