@@ -23,5 +23,5 @@ Alternatively, install all the programs:
 EOF
 wd=$PWD
 cd cmd
-for f in `/bin/ls`; do cd $f && go install && cd .. && echo "### $f  " && echo "\`\`\`" && $f -help 2>&1 || echo "\`\`\`" ; done | /usr/bin/fmt -s -w 80 >> ../$out
+for f in `/bin/ls`; do cd $f && go install && cd .. && echo "### $f  " && echo "\`\`\`" && $f -help 2>&1 | /usr/bin/fmt -s -w 80 && echo "\`\`\`" ; done >> ../$out
 cd $wd

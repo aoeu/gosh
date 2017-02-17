@@ -16,7 +16,9 @@ Alternatively, install all the programs:
 
 ## Program Descriptions
 
-### edita ``` Usage 'edita filepath [filepath...]'
+### edita  
+```
+Usage 'edita filepath [filepath...]'
 
 'edita' opens the specified files in the specified editor, or the editor
 referenced in the EDITOR environment variable, or exits with an error if no
@@ -36,8 +38,10 @@ Example:
 	find .  -name '*.go' | edita
   -with string
 	The text editor to edit text files with.
-``` ### ejecuta ``` Usage 'ejecuta -with [program name] -commands [command;
-command...]
+```
+### ejecuta  
+```
+Usage 'ejecuta -with [program name] -commands [command; command...]
 
 'ejecuta' executes commands with the specified program.
 
@@ -65,7 +69,10 @@ Example:
 	file (command).
   -with string
 	The executable file (command) to execute commands (sub-commands) with.
-``` ### escribe ``` Usage: escribe URL
+```
+### escribe  
+```
+Usage: escribe URL
 
 escribe downloads the file at the specified web URL and converts any HTML to
 plain text.
@@ -80,7 +87,10 @@ Examples:
 	echo 'function leamos() { escribe $1 | fmt -40 | pr -w 200 -5 | less; }'
 	>> ~/.profile
 
-``` ### filtra ``` Usage: filtra [token]...
+```
+### filtra  
+```
+Usage: filtra [token]...
 
 'filtra' removes lines of text from standard input that match regular
 expressions provided in a space-separated list.  Any lines of text that match
@@ -100,7 +110,10 @@ Flags:
 
   -all
 	Lines ommitted must match all filters (instead of any filter).
-``` ### imagebounds ``` Usage: imagebounds [FILE]...
+```
+### imagebounds  
+```
+Usage: imagebounds [FILE]...
 
 imagebounds takes a list of PNG, GIF, and JPG files and prints their pixel
 boundary dimenions.
@@ -110,7 +123,10 @@ Examples:
 	imagebounds *.png imagebounds cat.gif dog.png find .  -name '*.jpg' |
 	xargs imagebounds
 
-``` ### largest ``` Usage: largest [-top 20] [-under /path/to/a/directory] [-in
+```
+### largest  
+```
+Usage: largest [-top 20] [-under /path/to/a/directory] [-in
 /path/to/a/directory]
 
 largest walks the current or provided directory, and prints out the top N files
@@ -124,7 +140,10 @@ by largest size, in descending order.
 	The directory under which to size and rank all files.
   -within string
 	The directory within to size and rank all files.
-``` ### list ``` Usage: list [file]...
+```
+### list  
+```
+Usage: list [file]...
 
 'list' lists the files in the current directory in an actual list, instead of
 columns, which is dissimilar from the 'ls' command in Unix-like systems, but is
@@ -137,7 +156,10 @@ Examples:
 
 	list list a* list *.txt list foo.bar *.fiz qux.baz *.buz
 
-``` ### pasa ``` Usage: pasa [regular expression]...
+```
+### pasa  
+```
+Usage: pasa [regular expression]...
 
 'pasa' prints lines of text from standard input that match regular expressions
 provided in a space-separated list.
@@ -157,7 +179,10 @@ Flags:
   -all
 	Lines accepted must match all regular expressions provided (instead of
 	any).
-``` ### path ``` Usage: path [DIRECTORY]...
+```
+### path  
+```
+Usage: path [DIRECTORY]...
 
 path takes a space separated list of directory names of a valid directory tree
 and prints the full path with separators specific to the host Operating System.
@@ -184,7 +209,10 @@ Recipes:
 			cd (path $argv)
 		end funcsave goto goto go src net
 
-``` ### primero ``` Usage: primero [ [ < filepath] | [-of <filepath> ] ]
+```
+### primero  
+```
+Usage: primero [ [ < filepath] | [-of <filepath> ] ]
 
 "primero" prints the first line of text from standard input or a specified file
 to standard output that is not empty when trimmed of leading and trailing
@@ -215,7 +243,10 @@ Examples:
 
   -of string
 	A filepath to print the first line of.
-``` ### println ``` Usage: 'println text'
+```
+### println  
+```
+Usage: 'println text'
 
 'println' prints any provided text to standard output followed by a newline
 character.
@@ -225,8 +256,10 @@ Example:
 	println "Hello, $PWD" println "Why not use" the echo command?
 	'http://www.in-ulm.de/~mascheck/various/echo+printf'
 
-``` ### replace ``` Usage: replace -all [REGULAR EXPRESSION] -with [REPLACEMENT
-TEXT]
+```
+### replace  
+```
+Usage: replace -all [REGULAR EXPRESSION] -with [REPLACEMENT TEXT]
 
 "replace" reads text from standard input, searches for all text that matches a
 supplied regular expression, replaces the matching text with supplied
@@ -248,7 +281,10 @@ Example:
 	The regular expression to search for in the input text.
   -with string
 	The literal text to replace any regular expression matches with.
-``` ### revela ``` Usage: 'revela regexp'
+```
+### revela  
+```
+Usage: 'revela regexp'
 
 'revela' uses a regular expression to locate files with a matching name under
 the current working directory.
@@ -257,7 +293,10 @@ Example:
 
 	revela 'example.*\.txt'
 
-``` ### trash ``` Usage: trash [FILE]...  [DIRECTORY]...
+```
+### trash  
+```
+Usage: trash [FILE]...  [DIRECTORY]...
 
 'trash' moves files or directories provided as arguments to a folder, referred
 to as the "trash bin." The default location of the trash bin is a directory
@@ -310,7 +349,10 @@ Flags:
 	are invalid).
   -into string
 	Put all trash into a specific directory.  (default "/Users/aoeu/trash")
-``` ### ultimo ``` Usage: ultimo [ [ < filepath] | [-of <filepath> ] ]
+```
+### ultimo  
+```
+Usage: ultimo [ [ < filepath] | [-of <filepath> ] ]
 
 "ultimo" prints the last line of text from standard input or a specified file to
 standard output that is not empty when trimmed of leading and trailing
