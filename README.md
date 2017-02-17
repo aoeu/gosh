@@ -39,37 +39,6 @@ Example:
   -with string
 	The text editor to edit text files with.
 ```
-### ejecuta  
-```
-Usage 'ejecuta -with [program name] -commands [command; command...]
-
-'ejecuta' executes commands with the specified program.
-
-
-Example:
-
-	ejecuta -with git -commands 'add ejecuta.go; commit -m "Adding command
-	to execute subcommands of provided command"'
-
-	ejecuta -with go -commands 'fmt; vet; install' -on ejecuta.go
-
-	$ cat << EOF | ejecuta -with git > add ejecuta.go > > EOF
-
-	$ ejecuta -with git -commands "checkout release; fetch; merge
-	gerrit/release; \ > branch cr/draft/shiny-feature; checkout
-	cr/draft/shiny-feature; merge --squash shiny-feature; \ > mergetool;
-	commit -F $HOME/commitMessage.txt"
-
-  -commands string
-	The commands (sub-commands) to be executed as arguments to the
-	executable file (command).
-  -on string
-	A target path to execute the subcommands on, appended as a final
-	arugment in the list of subcommands to be executed by the executable
-	file (command).
-  -with string
-	The executable file (command) to execute commands (sub-commands) with.
-```
 ### escribe  
 ```
 Usage: escribe URL
@@ -293,6 +262,37 @@ Example:
 
 	revela 'example.*\.txt'
 
+```
+### run  
+```
+Usage 'run -with [program name] -commands [command; command...]
+
+'run' executes commands with the specified program.
+
+
+Example:
+
+	run -with git -commands 'add run.go; commit -m "Adding command to
+	execute subcommands of provided command"'
+
+	run -with go -commands 'fmt; vet; install' -on run.go
+
+	$ cat << EOF | run -with git > add run.go > > EOF
+
+	$ run -with git -commands "checkout release; fetch; merge
+	gerrit/release; \ > branch cr/draft/shiny-feature; checkout
+	cr/draft/shiny-feature; merge --squash shiny-feature; \ > mergetool;
+	commit -F $HOME/commitMessage.txt"
+
+  -commands string
+	The commands (sub-commands) to be executed as arguments to the
+	executable file (command).
+  -on string
+	A target path to execute the subcommands on, appended as a final
+	arugment in the list of subcommands to be executed by the executable
+	file (command).
+  -with string
+	The executable file (command) to execute commands (sub-commands) with.
 ```
 ### trash  
 ```
