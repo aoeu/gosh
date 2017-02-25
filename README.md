@@ -132,6 +132,27 @@ Examples:
 	list foo.bar *.fiz qux.baz *.buz
 
 ```
+### output  
+```
+Usage: output [file]...
+
+'output' reads the contents of any provided files until "end-of-file" (EOF)
+and sequentially copies the file contents to standard output.
+
+Filepaths may also be provided by standard input.
+
+Examples:
+
+	output /dev/urandom
+
+	output file1 file2 file3
+
+	echo 'test Darwin = $(uname) && man cat | grep -B3 -A1 "Rob Pike"' > /tmp/file &&
+	eval $(output /tmp/file)
+
+	find . -name '*.txt' | output
+
+```
 ### pasa  
 ```
 Usage: pasa [regular expression]...
