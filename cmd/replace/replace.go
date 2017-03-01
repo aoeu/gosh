@@ -42,6 +42,7 @@ func main() {
 	searchRegexp, err := regexp.Compile(args.searchExp)
 	switch {
 	case args.searchExp == "":
+		flag.Usage()
 	case args.repText == "":
 		flag.Usage()
 	case err != nil:
