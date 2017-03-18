@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/aoeu/gosh"
@@ -29,6 +30,30 @@ Examples:
 
 `
 
+type re struct {
+	regexp *regexp.Regexp
+	repl   string
+}
+
+func (r *re) replace(src string) string {
+	return r.regexp.ReplaceAllString(src, r.repl)
+}
+
+type res []re
+
+func (rr res) replace(src string) string {
+	out := src
+	for _, r := range rr {
+		out = r.replace(out)
+	}
+	return out
+}
+
+var thornRegexp = res{
+	re{regexp: regexp.MustCompile(`([^h])[Tt][Hh]`), repl: "${1}Þ"},
+	re{regexp: regexp.MustCompile(`^[Tt][Hh]`), repl: "Þ"},
+}
+
 func main() {
 	flag.Usage = gosh.UsageFunc(usageTemplate)
 	flag.Parse()
@@ -37,20 +62,23 @@ func main() {
 	case len(flag.Args()) == 0:
 		in := bufio.NewScanner(os.Stdin)
 		for in.Scan() {
-			fmt.Print(strings.Map(transcribe, in.Text()))
+			fmt.Print(transcribe(in.Text()))
 		}
 	default:
 		s = strings.Join(flag.Args(), " ")
-		fmt.Print(strings.Map(transcribe, s))
+		fmt.Print(transcribe(s))
 	}
 	fmt.Print("\n")
 }
 
-func transcribe(in rune) rune {
-	if out, ok := m[in]; ok {
-		return out
-	}
-	return in
+func transcribe(s string) string {
+	return strings.Map(
+		func(in rune) rune {
+			if out, ok := m[in]; ok {
+				return out
+			}
+			return in
+		}, thornRegexp.replace(s))
 }
 
 var m = map[rune]rune{
