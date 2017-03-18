@@ -57,32 +57,43 @@ Examples:
 ```
 Usage: filtra [token]...
 
-'filtra' removes lines of text from standard input that
-match regular expressions provided in a space-separated list.
-Any lines of text that match the regular expressions and constraints
-are printed standard output.
+'filtra' removes lines of text from standard input that match regular expressions provided in a
+space-separated list.  Any lines of text that match the regular expressions and constraints are
+printed standard output.
 
 Examples:
 
-	find . -name '*.yava' | filtra generated-sources target test
+	find .  -name '*.yava' | filtra generated-sources target test
 
 	cat works_of_shakespeare.txt | filtra thou thee thine
 
 	cat << EOF | filtra -all cat dog
-		o
-		cat
-		dog
-		cat dog
-		dog cat
-		tacocat
-		dogmaomagod
-		grep -v dog | grep -v cat | grep -v 'cat.*dog'
-		EOF
+		o cat dog cat dog dog cat tacocat dogmaomagod grep -v dog | grep -v cat | grep -v
+		'cat.*dog' EOF
 
 Flags:
 
   -all
 	Lines ommitted must match all filters (instead of any filter).
+```
+### futhork  
+```
+Usage: futhork [TOKEN]...
+
+'futhork' transliterates Latin letters to futhork (Medieval) runes of text tokens provided as
+arguments or via standard input and prints the translation to standard output.
+
+Any letter that does not have a known translation is copied verbatim to output (amidst any
+translated letters).
+
+Examples:
+
+	futhork HELLO world
+
+	futhork < beowulf.txt
+
+	escribe 'https://en.wikipedia.org/wiki/Medieval_runes' | futhork
+
 ```
 ### imagebounds  
 ```
