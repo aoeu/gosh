@@ -146,11 +146,7 @@ func trash(files []file, trashbin string) error {
 	for _, f := range files {
 		source := f.path
 		dest := fmt.Sprintf("%v%v", trashbin, source)
-		if f.isDir {
-			must(os.MkdirAll, dest)
-		} else {
-			must(os.MkdirAll, fmt.Sprintf("%v%v", trashbin, filepath.Dir(source)))
-		}
+		must(os.MkdirAll, fmt.Sprintf("%v%v", trashbin, filepath.Dir(source)))
 		if err := os.Rename(source, dest); err != nil {
 			return err
 		}
