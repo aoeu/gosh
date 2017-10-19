@@ -35,7 +35,12 @@ func main() {
 	if len(flag.Args()) != 1 {
 		flag.Usage()
 	}
-	filenameRegexp = regexp.MustCompile(os.Args[1])
+	var err error
+	filenameRegexp, err = regexp.Compile(os.Args[1])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	wd, err := os.Getwd()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -77,9 +82,9 @@ func main() {
 }
 
 func Mark(path string, info os.FileInfo, err error) error {
-    if info == nil { // TODO(aoeu): Why can this case happen (resulting in panics)?
+	if info == nil { // TODO(aoeu): Why can this case happen (resulting in panics)?
 		return nil
-    }
+	}
 	switch {
 	case info.IsDir():
 		return nil
