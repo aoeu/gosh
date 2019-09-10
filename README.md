@@ -16,6 +16,32 @@ Alternatively, install all the programs:
 
 ## Program Descriptions
 
+### append  
+```
+Usage: append -to [file] [text]
+
+'append' takes quoted arguments and appends them to the specified file,
+inserting newlines into the file after appending each argument.
+
+Examples:
+
+	append -to world hello
+
+	append -to protips.txt 'files can be easily clobberred with a typo of > instead of >> ' \
+		'when appending text to files via output redirection operators, ' \
+		'such as:  $ "stuff >> filename.txt"'
+
+	append -to /tmp/out "foo bar baz" 'zip ding pop' {do re mi}
+
+	append -to ~/install_notes.txt 'gsettings set org.mate.session.required-components
+	windowmanager i3' {gsettings set org.mate.session required-components-list
+	"['windowmanager', 'panel']"}
+
+Flags:
+
+  -to string
+	the path to the file to append text to
+```
 ### edita  
 ```
 Usage 'edita filepath [filepath...]'
