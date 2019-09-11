@@ -42,6 +42,19 @@ Flags:
   -to string
 	the path to the file to append text to
 ```
+### aqui  
+```
+Usage: aqui
+
+'aqui' outputs the name of the working directory being run from.
+
+Examples:
+
+	aqui
+
+	sh -c 'test $(aqui) = $(basename $PWD) && echo esta aqui'
+
+```
 ### edita  
 ```
 Usage 'edita filepath [filepath...]'
