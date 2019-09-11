@@ -114,11 +114,12 @@ Flags:
 ```
 Usage: futhork [TOKEN]...
 
-'futhork' transliterates Latin letters to futhork (Medieval) runes of text tokens provided as
-arguments or via standard input and prints the translation to standard output.
+'futhork' transliterates Latin letters to futhork (Medieval) runes
+of text tokens provided as arguments or via standard input and
+prints the translation to standard output.
 
-Any letter that does not have a known translation is copied verbatim to output (amidst any
-translated letters).
+Any letter that does not have a known translation is copied verbatim
+to output (amidst any translated letters).
 
 Examples:
 
