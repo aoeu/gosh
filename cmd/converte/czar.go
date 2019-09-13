@@ -28,7 +28,7 @@ func newRotReader(s string, amount int) *rotReader {
 	r := rotReader{}
 	r.r = strings.NewReader(s)
 	r.amount = amount
-	return r
+	return &r
 }
 
 func (r rotReader) Read(p []byte) (n int, err error) {
