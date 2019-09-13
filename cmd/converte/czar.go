@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"io"
-	"os"
 	"strings"
 )
 
@@ -43,8 +43,7 @@ func (r rotReader) Read(p []byte) (n int, err error) {
 var argAmount = flag.Int("r", 0, "Amount of letters to rotate (transpose) by.")
 var argDecrypt = flag.Bool("d", false, "Set flag to decrypt text.")
 
-func czar() {
-	flag.Parse()
+func czar(input string) string {
 	amount := *argAmount
 	if amount == 0 {
 		amount = 13 // rot13 by default.
@@ -53,10 +52,8 @@ func czar() {
 	if decrypt {
 		amount = 26 - amount
 	}
-	input := *argInput
-	if *argInput == "" {
-		input = scanInput()
-	}
 	r := newRotReader(input, amount)
-	io.Copy(os.Stdout, &r)
+	b := new(bytes.Buffer)
+	b.ReadFrom(r)
+	return b.String()
 }

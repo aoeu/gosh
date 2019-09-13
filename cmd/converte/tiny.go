@@ -1,10 +1,5 @@
 package main
 
-import (
-	"flag"
-	"fmt"
-)
-
 var tinyMap = map[rune][]rune{
 	'a': {' ', 867},
 	'c': {' ', 872},
@@ -22,7 +17,7 @@ var tinyMap = map[rune][]rune{
 	'x': {' ', 879},
 }
 
-func shrink(in string) (out string) {
+func tiny(in string) (out string) {
 	for _, r := range in {
 		r2, ok := tinyMap[r]
 		if !ok {
@@ -31,14 +26,4 @@ func shrink(in string) (out string) {
 		out += string(r2)
 	}
 	return
-}
-
-func tiny() {
-	flag.Parse()
-	input := *argInput
-	if *argInput == "" {
-		input = scanInput()
-	}
-	shrunk := shrink(input)
-	fmt.Printf("%s\n", shrunk)
 }

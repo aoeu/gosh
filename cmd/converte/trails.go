@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 )
 
 var trailsMap = map[rune]rune{
@@ -23,7 +22,6 @@ var trailsMap = map[rune]rune{
 }
 
 func addTrails(in string, num int) (out string) {
-	num = 3
 	for _, r := range in {
 		r2, ok := trailsMap[r]
 		if ok {
@@ -36,16 +34,7 @@ func addTrails(in string, num int) (out string) {
 			out += string(r)
 		}
 	}
-	return
+	return out
 }
 
 var num = flag.Int("t", 1, "Number of times to transform each letter.")
-
-func trails() {
-	flag.Parse()
-	input := *argInput
-	if *argInput == "" {
-		input = scanInput()
-	}
-	fmt.Printf("%s\n", addTrails(input, *num))
-}

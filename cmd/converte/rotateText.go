@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"strings"
 )
 
@@ -22,23 +21,18 @@ func initMap() {
 
 var flipIt = flag.Bool("f", false, "Rage flip it.")
 
-func rotate() {
-	flag.Parse()
-	input := *argInput
-	if *argInput == "" {
-		input = scanInput()
-	}
+func rotate(s string) string {
 	initMap()
 	rotated := strings.Map(func(r rune) rune {
 		if rr, ok := runeMap[r]; ok {
 			return rr
 		}
 		return r
-	}, reverse(input))
+	}, reverse(s))
 	if *flipIt {
 		rotated = "(╯°□°)╯︵" + rotated
 	}
-	fmt.Printf("%s\n", rotated)
+	return rotated
 }
 
 var runeMap = map[rune]rune{

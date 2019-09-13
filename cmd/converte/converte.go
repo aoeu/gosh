@@ -23,8 +23,12 @@ func scanInput() string {
 	return strings.Join(input, " ")
 }
 
-var argInput = flag.String("i", "", "A string of text to transform.")
-
 func main() {
 	// TODO(aoeu): Implement
+	flag.Parse()
+	input := *argInput
+	if *argInput == "" {
+		input = scanInput()
+	}
+	_ = input
 }
