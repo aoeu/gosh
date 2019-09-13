@@ -46,7 +46,7 @@ trails: The amount of trails to add`)
 	}
 	var s string
 	switch args.funcName {
-	case "rotate":
+	case "rotate", "flip":
 		s = rotate(args.input, args.emote)
 	case "czar", "caesar", "rot":
 		s = czar(args.input, args.amount, args.decrypt)
