@@ -14,14 +14,6 @@ func reverse(text string) string {
 	return string(r)
 }
 
-func rotate(in rune) rune {
-	out, ok := runeMap[in]
-	if !ok {
-		return in
-	}
-	return out
-}
-
 func initMap() {
 	for key, value := range runeMap {
 		runeMap[value] = key
@@ -30,14 +22,19 @@ func initMap() {
 
 var flipIt = flag.Bool("f", false, "Rage flip it.")
 
-func rotateText() {
+func rotate() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
 		input = scanInput()
 	}
 	initMap()
-	rotated := strings.Map(rotate, reverse(input))
+	rotated := strings.Map(func(r rune) rune {
+		if rr, ok := runeMap[r]; ok {
+			return rr
+		}
+		return r
+	}, reverse(input))
 	if *flipIt {
 		rotated = "(╯°□°)╯︵" + rotated
 	}
