@@ -25,10 +25,26 @@ func scanInput() string {
 
 func main() {
 	// TODO(aoeu): Implement
+	args := struct {
+		input    string
+		funcName string
+	}{}
+	flag.StringVar(&args.funcName, "with", "rotate", "the name of the way to convert input text")
 	flag.Parse()
-	input := *argInput
-	if *argInput == "" {
-		input = scanInput()
+	args.input = strings.Join(flag.Args(), " ")
+	if args.input == "" {
+		args.input = scanInput()
 	}
-	_ = input
+	var s string
+	switch args.funcName {
+	case "rotate":
+		s = rotate(args.input)
+	case "czar":
+		s = czar(args.input)
+	case "tiny":
+		s = tiny(args.input)
+	case "strike":
+		s = strikeText(args.input)
+	}
+	fmt.Println(s)
 }
