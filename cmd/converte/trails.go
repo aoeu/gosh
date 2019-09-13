@@ -45,7 +45,7 @@ func trails() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
-		input = getInput()
+		input = scanInput()
 	}
 	fmt.Printf("%s\n", addTrails(input, *num))
 }

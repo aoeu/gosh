@@ -34,7 +34,7 @@ func rotateText() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
-		input = getInput()
+		input = scanInput()
 	}
 	initMap()
 	rotated := strings.Map(rotate, reverse(input))

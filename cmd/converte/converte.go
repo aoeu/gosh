@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getInput() string {
+func scanInput() string {
 	input := make([]string, 0)
 	var token string
 	for {

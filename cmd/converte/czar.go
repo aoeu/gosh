@@ -55,7 +55,7 @@ func czar() {
 	}
 	input := *argInput
 	if *argInput == "" {
-		input = getInput()
+		input = scanInput()
 	}
 	r := newRotReader(input, amount)
 	io.Copy(os.Stdout, &r)

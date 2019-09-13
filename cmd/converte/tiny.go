@@ -37,7 +37,7 @@ func tiny() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
-		input = getInput()
+		input = scanInput()
 	}
 	shrunk := shrink(input)
 	fmt.Printf("%s\n", shrunk)

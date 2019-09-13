@@ -9,7 +9,7 @@ func strikeText() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
-		input = getInput()
+		input = scanInput()
 	}
 	output := make([]rune, 0)
 	for _, r := range input {
