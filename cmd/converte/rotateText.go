@@ -12,16 +12,9 @@ func reverse(text string) string {
 	return string(r)
 }
 
-func initMap() {
-	for key, value := range runeMap {
-		runeMap[value] = key
-	}
-}
-
 func rotate(s string, emote bool) string {
-	initMap()
 	rotated := strings.Map(func(r rune) rune {
-		if rr, ok := runeMap[r]; ok {
+		if rr, ok := rotations[r]; ok {
 			return rr
 		}
 		return r
@@ -32,7 +25,7 @@ func rotate(s string, emote bool) string {
 	return rotated
 }
 
-var runeMap = map[rune]rune{
+var rotations = map[rune]rune{
 	'a': 'ɐ',
 	'b': 'q',
 	'c': 'ɔ',
@@ -100,4 +93,73 @@ var runeMap = map[rune]rune{
 	'W': 'M',
 	'Y': '⅄',
 	'Z': 'Z',
+
+	// Reversed via Edit .s/('.*'): ('.*'),/\2: \1,/g
+	'ɐ': 'a',
+	// duplicate 'q': 'b',
+	'ɔ': 'c',
+	// duplicate 'p': 'd',
+	'ǝ': 'e',
+	'ɟ': 'f',
+	'ƃ': 'g',
+	'ɥ': 'h',
+	'ɪ': 'i',
+	'𐅾': 'j',
+	'ʞ': 'k',
+	// duplicate:  'l': 'l',
+	'ɯ': 'm',
+	// duplicate:  'u': 'n',
+	// duplicate:  'o': 'o',
+	// duplicate:  'd': 'p',
+	// duplicate:  'b': 'q',
+	'ɹ': 'r',
+	// duplicate:  's': 's',
+	'ʇ': 't',
+	// duplicate:  'n': 'u',
+	'ʌ': 'v',
+	'ʍ': 'w',
+	// duplicate:  'x': 'x',
+	'ʎ': 'y',
+	// duplicate:  'z': 'z',
+
+	// duplicate:  ',': 'ʻ',
+	// duplicate:  '!': '¡',
+	// duplicate:  '¡': '!',
+	// duplicate:  '?': '¿',
+	// duplicate:  '¿': '?',
+	// duplicate:  ',': '\'',
+	// duplicate: 	'"': '«',
+	// duplicate: 	'.': '˙',
+	// duplicate: 	'(': ')',
+	// duplicate: 	')': '(',
+	// duplicate: 	'[': ']',
+	// duplicate: 	']': '[',
+	// duplicate:  '{': '}',
+	// duplicate:  '}': '{',
+
+	'ᗄ': 'A',
+	'ᗺ': 'B',
+	'Ɔ': 'C',
+	'ᗡ': 'D',
+	'Ǝ': 'E',
+	'ᖵ': 'F',
+	'⅁': 'G',
+	// duplicate:	'H': 'H',
+	// duplicate: 'I': 'I',
+	'ᒋ': 'J',
+	// duplicate 'ʞ': 'K',
+	'ᒣ': 'L',
+	// duplicate: 'W': 'M',
+	// duplicate:	'N': 'N',
+	// duplicate:	'O': 'O',
+	'Ԁ': 'P',
+	'ර': 'Q',
+	'ᖈ': 'R',
+	// duplicate: 'S': 'S',
+	'⊥': 'T',
+	'ᑎ': 'U',
+	'Ʌ': 'V',
+	// duplicate: 'M': 'W',
+	'⅄': 'Y',
+	// duplicate:	'Z': 'Z',
 }
