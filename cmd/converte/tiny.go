@@ -1,6 +1,6 @@
 package main
 
-var tinyMap = map[rune][]rune{
+var miniatures = map[rune][]rune{
 	'a': {' ', 867},
 	'c': {' ', 872},
 	'd': {' ', ' ', 873},
@@ -19,7 +19,7 @@ var tinyMap = map[rune][]rune{
 
 func tiny(in string) (out string) {
 	for _, r := range in {
-		r2, ok := tinyMap[r]
+		r2, ok := miniatures[r]
 		if !ok {
 			r2 = []rune{r}
 		}
