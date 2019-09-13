@@ -48,8 +48,8 @@ trails: The amount of trails to add`)
 		s = rotate(args.input, args.emote)
 	case "czar":
 		s = czar(args.input, args.amount, args.decrypt)
-	case "tiny":
-		s = tiny(args.input)
+	case "shrink":
+		s = shrink(args.input)
 	case "strikethrough":
 		s = strikethrough(args.input)
 	case "trails":

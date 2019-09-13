@@ -17,7 +17,7 @@ var miniatures = map[rune][]rune{
 	'x': {' ', 879},
 }
 
-func tiny(in string) (out string) {
+func shrink(in string) (out string) {
 	for _, r := range in {
 		r2, ok := miniatures[r]
 		if !ok {
