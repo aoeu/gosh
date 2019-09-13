@@ -1,6 +1,6 @@
 package main
 
-var trailsMap = map[rune]rune{
+var trails = map[rune]rune{
 	'a': 867,
 	'c': 872,
 	'd': 873,
@@ -19,7 +19,7 @@ var trailsMap = map[rune]rune{
 
 func addTrails(in string, num int) (out string) {
 	for _, r := range in {
-		r2, ok := trailsMap[r]
+		r2, ok := trails[r]
 		if ok {
 			runes := []rune{r}
 			for i := 0; i < num; i++ {
