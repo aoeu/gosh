@@ -18,7 +18,7 @@ func initMap() {
 	}
 }
 
-func rotate(s string, flip bool) string {
+func rotate(s string, emote bool) string {
 	initMap()
 	rotated := strings.Map(func(r rune) rune {
 		if rr, ok := runeMap[r]; ok {
@@ -26,7 +26,7 @@ func rotate(s string, flip bool) string {
 		}
 		return r
 	}, reverse(s))
-	if flip {
+	if emote {
 		rotated = "(╯°□°)╯︵" + rotated
 	}
 	return rotated
