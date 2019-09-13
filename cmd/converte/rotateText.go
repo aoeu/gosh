@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"strings"
 )
 
@@ -19,9 +18,7 @@ func initMap() {
 	}
 }
 
-var flipIt = flag.Bool("f", false, "Rage flip it.")
-
-func rotate(s string) string {
+func rotate(s string, flip bool) string {
 	initMap()
 	rotated := strings.Map(func(r rune) rune {
 		if rr, ok := runeMap[r]; ok {
@@ -29,7 +26,7 @@ func rotate(s string) string {
 		}
 		return r
 	}, reverse(s))
-	if *flipIt {
+	if flip {
 		rotated = "(╯°□°)╯︵" + rotated
 	}
 	return rotated

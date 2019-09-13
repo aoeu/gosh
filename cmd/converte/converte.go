@@ -28,8 +28,15 @@ func main() {
 	args := struct {
 		input    string
 		funcName string
+		amount   int
+		decrypt  bool
+		flip     bool
 	}{}
 	flag.StringVar(&args.funcName, "with", "rotate", "the name of the way to convert input text")
+	flag.IntVar(&args.amount, "amount", 0, `czar: Amount of letter offsets to transpose by.
+trails: The amount of trails to add`)
+	flag.BoolVar(&args.decrypt, "decrypt", false, "czar: Decrypt text.")
+	flag.BoolVar(&args.flip, "flip", false, "rotate: Flip text with added emoji")
 	flag.Parse()
 	args.input = strings.Join(flag.Args(), " ")
 	if args.input == "" {
@@ -38,13 +45,15 @@ func main() {
 	var s string
 	switch args.funcName {
 	case "rotate":
-		s = rotate(args.input)
+		s = rotate(args.input, args.flip)
 	case "czar":
-		s = czar(args.input)
+		s = czar(args.input, args.amount, args.decrypt)
 	case "tiny":
 		s = tiny(args.input)
 	case "strike":
 		s = strikeText(args.input)
+	case "trails":
+		s = addTrails(args.input, args.amount)
 	}
 	fmt.Println(s)
 }

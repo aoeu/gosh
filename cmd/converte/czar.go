@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"flag"
 	"io"
 	"strings"
 )
@@ -40,15 +39,10 @@ func (r rotReader) Read(p []byte) (n int, err error) {
 	return
 }
 
-var argAmount = flag.Int("r", 0, "Amount of letters to rotate (transpose) by.")
-var argDecrypt = flag.Bool("d", false, "Set flag to decrypt text.")
-
-func czar(input string) string {
-	amount := *argAmount
-	if amount == 0 {
+func czar(input string, amount int, decrypt bool) string {
+	if amount < 1 {
 		amount = 13 // rot13 by default.
 	}
-	decrypt := *argDecrypt
 	if decrypt {
 		amount = 26 - amount
 	}

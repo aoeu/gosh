@@ -1,9 +1,5 @@
 package main
 
-import (
-	"flag"
-)
-
 var trailsMap = map[rune]rune{
 	'a': 867,
 	'c': 872,
@@ -36,5 +32,3 @@ func addTrails(in string, num int) (out string) {
 	}
 	return out
 }
-
-var num = flag.Int("t", 1, "Number of times to transform each letter.")
