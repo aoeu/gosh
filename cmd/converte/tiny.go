@@ -3,11 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-	"strings"
 )
 
-var runeMap = map[rune][]rune{
+var tinyMap = map[rune][]rune{
 	'a': {' ', 867},
 	'c': {' ', 872},
 	'd': {' ', ' ', 873},
@@ -26,7 +24,7 @@ var runeMap = map[rune][]rune{
 
 func shrink(in string) (out string) {
 	for _, r := range in {
-		r2, ok := runeMap[r]
+		r2, ok := tinyMap[r]
 		if !ok {
 			r2 = []rune{r}
 		}
@@ -35,25 +33,7 @@ func shrink(in string) (out string) {
 	return
 }
 
-func getInput() string {
-	input := make([]string, 0)
-	var token string
-	for {
-		_, err := fmt.Scan(&token)
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			}
-			log.Fatal(err)
-		}
-		input = append(input, token)
-	}
-	return strings.Join(input, " ")
-}
-
-var argInput = flag.String("i", "", "A string of text to transform.")
-
-func main() {
+func tiny() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {

@@ -2,9 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io"
-	"log"
 	"os"
 	"strings"
 )
@@ -42,27 +40,10 @@ func (r rotReader) Read(p []byte) (n int, err error) {
 	return
 }
 
-func getInput() string {
-	input := make([]string, 0)
-	var token string
-	for {
-		_, err := fmt.Scan(&token)
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			}
-			log.Fatal(err)
-		}
-		input = append(input, token)
-	}
-	return strings.Join(input, " ")
-}
-
-var argInput = flag.String("i", "", "Text to cypher.")
 var argAmount = flag.Int("r", 0, "Amount of letters to rotate (transpose) by.")
 var argDecrypt = flag.Bool("d", false, "Set flag to decrypt text.")
 
-func main() {
+func czar() {
 	flag.Parse()
 	amount := *argAmount
 	if amount == 0 {

@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"strings"
 )
 
@@ -25,23 +24,6 @@ func rotateRune(in rune) rune {
 	return out
 }
 
-// Gets text from standard in and returns it as a single string.
-func getInput() string {
-	input := make([]string, 0)
-	var token string
-	for {
-		_, err := fmt.Scan(&token)
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			}
-			log.Fatal(err)
-		}
-		input = append(input, token)
-	}
-	return strings.Join(input, " ")
-}
-
 // Initializes the rotation map (by making it bi-directional).
 func initMap() {
 	for key, value := range runeMap {
@@ -49,10 +31,9 @@ func initMap() {
 	}
 }
 
-var argInput = flag.String("i", "", "A string of text to rotate.")
 var flipIt = flag.Bool("f", false, "Rage flip it.")
 
-func main() {
+func rotateText() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {

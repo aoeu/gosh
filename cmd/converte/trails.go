@@ -3,11 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-	"strings"
 )
 
-var runeMap = map[rune]rune{
+var trailsMap = map[rune]rune{
 	'a': 867,
 	'c': 872,
 	'd': 873,
@@ -24,10 +22,10 @@ var runeMap = map[rune]rune{
 	'z': 7654,
 }
 
-func trails(in string, num int) (out string) {
+func addTrails(in string, num int) (out string) {
 	num = 3
 	for _, r := range in {
-		r2, ok := runeMap[r]
+		r2, ok := trailsMap[r]
 		if ok {
 			runes := []rune{r}
 			for i := 0; i < num; i++ {
@@ -41,30 +39,13 @@ func trails(in string, num int) (out string) {
 	return
 }
 
-func getInput() string {
-	input := make([]string, 0)
-	var token string
-	for {
-		_, err := fmt.Scan(&token)
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			}
-			log.Fatal(err)
-		}
-		input = append(input, token)
-	}
-	return strings.Join(input, " ")
-}
-
-var argInput = flag.String("i", "", "A string of text to transform.")
 var num = flag.Int("t", 1, "Number of times to transform each letter.")
 
-func main() {
+func trails() {
 	flag.Parse()
 	input := *argInput
 	if *argInput == "" {
 		input = getInput()
 	}
-	fmt.Printf("%s\n", trails(input, *num))
+	fmt.Printf("%s\n", addTrails(input, *num))
 }
