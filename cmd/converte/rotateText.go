@@ -17,7 +17,7 @@ func reverseText(text string) string {
 func rotateRune(in rune) rune {
 	out, ok := runeMap[in]
 	if !ok {
-		out = in // Out is in, man.
+		return in
 	}
 	return out
 }
