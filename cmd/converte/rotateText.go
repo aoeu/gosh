@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-// Reverses the runes in a string.
 func reverseText(text string) string {
 	r := []rune(text)
 	for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {
@@ -15,7 +14,6 @@ func reverseText(text string) string {
 	return string(r)
 }
 
-// "Rotates" a rune 180 degrees clockwise.
 func rotateRune(in rune) rune {
 	out, ok := runeMap[in]
 	if !ok {
@@ -24,7 +22,6 @@ func rotateRune(in rune) rune {
 	return out
 }
 
-// Initializes the rotation map (by making it bi-directional).
 func initMap() {
 	for key, value := range runeMap {
 		runeMap[value] = key
