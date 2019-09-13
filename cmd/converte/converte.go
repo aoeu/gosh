@@ -52,7 +52,7 @@ trails: The amount of trails to add`)
 		s = czar(args.input, args.amount, args.decrypt)
 	case "rot13":
 		s = czar(args.input, 13, args.decrypt)
-	case "shrink":
+	case "shrink", "minify":
 		s = shrink(args.input)
 	case "strikethrough":
 		s = strikethrough(args.input)
