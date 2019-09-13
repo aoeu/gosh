@@ -50,8 +50,8 @@ trails: The amount of trails to add`)
 		s = czar(args.input, args.amount, args.decrypt)
 	case "tiny":
 		s = tiny(args.input)
-	case "strike":
-		s = strikeText(args.input)
+	case "strikethrough":
+		s = strikethrough(args.input)
 	case "trails":
 		s = addTrails(args.input, args.amount)
 	}
