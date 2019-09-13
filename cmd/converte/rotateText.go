@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func reverseText(text string) string {
+func reverse(text string) string {
 	r := []rune(text)
 	for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {
 		r[i], r[j] = r[j], r[i]
@@ -14,7 +14,7 @@ func reverseText(text string) string {
 	return string(r)
 }
 
-func rotateRune(in rune) rune {
+func rotate(in rune) rune {
 	out, ok := runeMap[in]
 	if !ok {
 		return in
@@ -37,7 +37,7 @@ func rotateText() {
 		input = getInput()
 	}
 	initMap()
-	rotated := strings.Map(rotateRune, reverseText(input))
+	rotated := strings.Map(rotate, reverse(input))
 	if *flipIt {
 		rotated = "(╯°□°)╯︵" + rotated
 	}
