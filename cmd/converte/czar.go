@@ -24,7 +24,7 @@ type rotReader struct {
 	amount int
 }
 
-func newRotReader(s string, amount int) rotReader {
+func newRotReader(s string, amount int) *rotReader {
 	r := rotReader{}
 	r.r = strings.NewReader(s)
 	r.amount = amount
