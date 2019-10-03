@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+// TODO(aoeu): Usage template with examples.
+
 func scanInput() string {
 	input := make([]string, 0)
 	var token string
@@ -26,7 +28,6 @@ func scanInput() string {
 }
 
 func main() {
-	// TODO(aoeu): Implement
 	args := struct {
 		input    string
 		funcName string
