@@ -191,6 +191,49 @@ Examples:
 	list foo.bar *.fiz qux.baz *.buz
 
 ```
+### now  
+```
+Usage: now
+
+'now' outputs the current date, time, or datetime, optionally
+with added or subtracted units of duration.
+
+Examples:
+
+	now
+
+	now -date
+
+	now -time
+
+	now -date -time
+
+	now -date -minus -days 30
+
+	now -time -plus -minutes 9
+
+	now -date -time -plus hours 23
+
+Flags:
+
+  -date
+	output the date, formatted as "YYYY-MM-DD"
+  -datetime
+	output the datetime, formatted as "YYYY-MM-DD_HH:MM:SS", equivalent to using both
+	'-date' and '-time' flags or excluding all of the "-date", "-time", and "-datetime" flags).
+  -days uint
+	the number of days to add or substract from the current time
+  -hours uint
+	the number of hours to add or substract from the current time
+  -minus
+
+  -minutes uint
+	the number of minutes to add or substract from the current time
+  -plus
+
+  -time
+	output the time, formatted as "HH:MM:SS"
+```
 ### output  
 ```
 Usage: output [file]...
