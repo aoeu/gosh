@@ -55,6 +55,33 @@ Examples:
 	sh -c 'test $(aqui) = $(basename $PWD) && echo esta aqui'
 
 ```
+### dates  
+```
+Usage dates -from <DATE> -to <DATE> [-with <DELIMITER>]
+
+'dates' outputs a range of dates, separated with newlines by default,
+or separated by a delimiter string provided as an optional argument,
+with a newline following the final outputted date (instead of the delimiter).
+
+Examples:
+
+	dates -from 2007-01-01 -to 2007-02-01
+
+	dates -from 2019-10-01 -to 2019-10-31 -with ', '
+
+	dates -from 01/01/1970 -to 01/01/1972 -like '01/02/2006'
+
+
+  -from string
+	the date to start outputting the date range from (inclusive)
+  -like string
+	an optional date format to print the dates as, examplified with January 1, 2006. (default
+	"2006-01-02")
+  -to string
+	the date to output the date range until (inclusive)
+  -with string
+	an optional string to delimit the dates in the range with (default "\n")
+```
 ### edita  
 ```
 Usage 'edita filepath [filepath...]'
