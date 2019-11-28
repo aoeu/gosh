@@ -104,7 +104,12 @@ func main() {
 			break
 		}
 	}
-	dest := fmt.Sprintf("%v/%v", args.into, time.Now().Format(time.RFC3339))
+	trashbin, err := filepath.Abs(args.into)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not determine absolute file path of the destination trash bin due to error: %v", err)
+		os.Exit(1)
+	}
+	dest := fmt.Sprintf("%v/%v", trashbin, time.Now().Format(time.RFC3339))
 	must(os.MkdirAll, dest)
 	if err := trash(args.files, dest); err != nil {
 		fmt.Fprintln(os.Stderr, err)
